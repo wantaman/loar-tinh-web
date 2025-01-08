@@ -1,0 +1,123 @@
+/* Footer Section */
+.nav-section {
+    background-color: #333;
+    color: #fff;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    
+    .footer-overlay {
+      position: relative;
+      z-index: 1;
+    }
+  
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  
+    .footer-left-sec,
+    .footer-right-sec {
+      padding: 20px;
+    }
+  
+    /* Logo and copyright section */
+    .footer-left-sec {
+      .logo {
+        display: block;
+        margin-bottom: 10px;
+        height: 40px; // Set the logo height as per your requirement
+      }
+  
+      .copy-right {
+        font-size: 14px;
+        color: #bbb;
+      }
+    }
+  
+    /* Contact Us section */
+    h5 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+  
+    .footer-text {
+      font-size: 14px;
+      color: #bbb;
+      margin: 5px 0;
+  
+      i {
+        margin-right: 10px;
+      }
+    }
+  
+    /* Follow Us Section */
+    .icon-list {
+      list-style: none;
+      padding-left: 0;
+  
+      li {
+        display: inline-block;
+        margin-right: 10px;
+  
+        a {
+          img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s;
+          }
+  
+          &:hover img {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  
+    /* Language and Payment Methods Section */
+    .lan-btn {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #333;
+      font-size: 14px;
+  
+      option {
+        padding: 5px;
+      }
+    }
+  
+    .we-accept {
+      margin-top: 15px;
+  
+      img {
+        width: 100%;
+        max-width: 200px;
+        margin-top: 10px;
+      }
+    }
+  
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .footer-left-sec,
+      .footer-right-sec {
+        text-align: center;
+      }
+  
+      .footer-left-sec {
+        margin-bottom: 20px;
+      }
+  
+      .footer-right-sec .row {
+        display: block;
+      }
+  
+      .icon-list li {
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  

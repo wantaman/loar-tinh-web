@@ -1,30 +1,50 @@
-<p-megamenu [model]="items" [style]="{ 'border-radius': '3rem', display: 'flex' }" styleClass="p-4 bg-surface-0 dark:bg-surface-900">
-    <ng-template #start>
-        <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8">
-            <path d="..." fill="var(--primary-color)" />
-        </svg>
+<div class="container">
+
+    <div class="menu">
+        <ul class="list-unstyled mb-0">
+            <li><a href="#">Women</a></li>
+            <li><a href="#">Men</a></li>
+            <li><a href="#">Boys</a></li>
+            <li><a href="#">Girls</a></li>
+        </ul>
+    </div>
+
+    <div class="logo-company">
+        <img height="30px" src="../../../assets/images/logo navbar.png" alt="Logo">
+    </div>
+
+    <div class="auth-links text-end">
+        
+        <a (click)="showDialog()" href="#">Login</a>
+        <a (click)="showDialog()" href="#">Sign Up</a>
+    </div>
+</div>
+
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
+    <!-- Header Section -->
+    <ng-template pTemplate="header">
+        <h5 class="text-center mb-4">Login</h5>
     </ng-template>
-    <ng-template #item let-item>
-        <a *ngIf="item.root" pRipple class="flex items-center cursor-pointer px-4 py-2 overflow-hidden relative font-semibold text-lg uppercase" style="border-radius: 2rem">
-            <i [ngClass]="item.icon"></i>
-            <span class="ml-2">{{ item.label }}</span>
-        </a>
-        <a *ngIf="!item.root && !item.image" class="flex items-center p-4 cursor-pointer mb-2 gap-2">
-            <span class="inline-flex items-center justify-center rounded-full bg-primary text-primary-contrast w-12 h-12">
-                <i [ngClass]="item.icon + ' text-lg'"></i>
-            </span>
-            <span class="inline-flex flex-col gap-1">
-                <span class="font-medium text-lg text-surface-900 dark:text-surface-0">{{ item.label }}</span>
-                <span class="whitespace-nowrap">{{ item.subtext }}</span>
-            </span>
-        </a>
-        <div *ngIf="item.image" class="flex flex-col items-start gap-4">
-            <img [src]="item.image" alt="megamenu-demo" class="w-full" />
-            <span>{{ item.subtext }}</span>
-            <p-button [label]="item.label" [outlined]="true"></p-button>
+
+    <!-- Body Section -->
+    <div class="flex flex-column gap-4">
+        <div class="flex items-center gap-4 mb-4">
+            <label for="username" class="font-semibold w-24">Username</label>
+            <input pInputText id="username" name="username" class="flex-auto" autocomplete="off" required />
+        </div>
+
+        <!-- Password Input -->
+        <div class="flex items-center gap-4 mb-4">
+            <label for="password" class="font-semibold w-24">Password</label>
+            <input pInputText id="password" name="password" class="flex-auto" type="password" autocomplete="off" required />
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <ng-template #footer>
+        <div class="p-d-flex p-jc-between">
+            <p-button label="Cancel" [text]="true" severity="secondary" (click)="visible = false" />
+            <p-button label="Login" [outlined]="true" severity="primary"  />
         </div>
     </ng-template>
-    <ng-template #end>
-        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-    </ng-template>
-</p-megamenu>
+</p-dialog>

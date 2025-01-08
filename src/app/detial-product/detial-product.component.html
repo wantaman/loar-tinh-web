@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row">
+        <!-- First Gallery Column -->
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <p-galleria [value]="images" [showItemNavigators]="true" [circular]="true" [numVisible]="5"
+                [containerStyle]="{ 'max-width': '100%' }">
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="item.itemImageSrc"
+                        style="width: 100%; height: 40vh; object-fit: cover; display: block;" />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <img [src]="item.thumbnailImageSrc" style="width: 220px; height: 14vh; display: block;" />
+                </ng-template>
+            </p-galleria>
+        </div>
+        <!-- Second Gallery Column -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div>
+                <h6>US 12$</h6>
+                <h6 class="mt-4">Size</h6>
+                <div class="mt-3">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle style="width: 50px;" value="xs">XS</mat-button-toggle>
+                        <mat-button-toggle style="width: 50px;" value="s">S</mat-button-toggle>
+                        <mat-button-toggle style="width: 50px;" value="m">M</mat-button-toggle>
+                        <mat-button-toggle style="width: 50px;" value="l">L</mat-button-toggle>
+                        <mat-button-toggle style="width: 50px;" value="xl">XL</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+                <h6 class="mt-4">Quantity</h6>
+                <div class="mt-3">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle style="width: 50px;" value="xs">-</mat-button-toggle>
+                        <mat-button-toggle style="width: 50px;">S</mat-button-toggle>
+                        <mat-button-toggle style="width: 50px;" value="m">+</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+                <div class="mt-3">
+                    <button class="w-100 bg-primary" mat-fab extended>
+                        Add To Cart
+                    </button>
+                </div>
+                <div class=" flex justify-content-center mt-3">
+                    <mat-accordion multi>
+                        <mat-expansion-panel >
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="text-bold"> Model info </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                Model is 163 cm tall / 45 kg weight and is wearing size XS.
+                            </div>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel class="mt-3">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="text-bold"> Product details </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span>Code.  1222411812</span>
+                                <span>Regular blouse featuring puff sleeves with front tie button and round neck.</span>
+                            </div>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

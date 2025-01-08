@@ -1,6 +1,132 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 
-p-megamenu {
-    display: block;
-    width: 100%;
+  .logo-company img {
+      height: 30px;
   }
-  
+
+  .menu {
+      ul {
+          display: flex;
+          gap: 15px;
+          margin: 0;
+          padding: 0;
+
+          li {
+              list-style: none;
+
+              a {
+                  text-decoration: none;
+                  color: #000;
+                  font-weight: 500;
+                  transition: color 0.3s;
+
+                  &:hover {
+                      color: #007bff;
+                  }
+              }
+          }
+      }
+  }
+
+  .auth-links {
+      a {
+          margin-left: 15px;
+          text-decoration: none;
+          color: #000;
+          font-weight: 500;
+
+          &:hover {
+              color: #007bff;
+          }
+      }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .menu {
+      display: none; // Hide the menu on small screens
+  }
+
+  .auth-links {
+      margin-top: 10px;
+      text-align: center;
+
+      a {
+          margin-left: 0;
+          display: inline-block;
+          margin-top: 5px;
+      }
+  }
+
+  // Show the hamburger icon on small screens
+  .menu-toggle {
+      display: block;
+  }
+
+  .navbar-collapse {
+      width: 100%;
+      text-align: center;
+
+      .navbar-nav {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          padding: 15px 0;
+
+          li {
+              list-style: none;
+
+              a {
+                  text-decoration: none;
+                  color: #000;
+                  font-weight: 500;
+                  transition: color 0.3s;
+
+                  &:hover {
+                      color: #007bff;
+                  }
+              }
+          }
+      }
+
+      .auth-links {
+          text-align: center;
+          margin-top: 15px;
+
+          a {
+              margin-left: 0;
+              display: inline-block;
+              margin-top: 5px;
+          }
+      }
+  }
+}
+
+
+
+
+/* Dialog Header styling */
+.p-dialog .p-dialog-header {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Footer Button Styling */
+.p-dialog-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-button {
+  width: 48%;  /* Adjust button width for better spacing */
+}

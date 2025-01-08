@@ -1,1 +1,32 @@
-<p>home works!</p>
+<div class="container home-page mt-3">
+    <!-- Carousel Section -->
+    <p-carousel [value]="images" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1" [circular]="true"
+        [autoplayInterval]="3200" [responsiveOptions]="responsiveOptions">
+        <ng-template let-image pTemplate="item">
+            <img style="width: 100%; height: 54vh; object-fit:cover;" [src]="image" alt="Product Image" />
+        </ng-template>
+    </p-carousel>
+
+    <!-- Title and "View More" Section -->
+    <div class="row">
+        <div class="col-12">
+            <h5 class="big-title d-flex justify-content-between align-items-center mb-4">
+                <span>Chinese New Years Collection!</span>
+                <a href="/view-more" class="view-more-link">View More</a>
+            </h5>
+        </div>
+    </div>
+
+    <!-- Game Section -->
+    <div class="row">
+        <div class="col-sm-4 col-md-2 game-container">
+            <img class="hot-label" src="../../../src/assets/images/logo navbar.png" />
+            <div class="card">
+                <img class="card-img-top" alt="Card image cap" />
+                <div class="card-body">
+                    <p class="card-text">Game Name</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

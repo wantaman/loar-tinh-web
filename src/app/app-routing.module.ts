@@ -13,6 +13,11 @@ const routes: Routes = [
         canActivate : [],
         component : HomeComponent, 
       },
+      {
+        path: 'detail-product', 
+        canActivate : [],
+        component : HomeComponent, 
+      },
     ]  
   }
 ];
