@@ -28,6 +28,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
+import { AllApiService } from './core/all-api.service';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './core/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +47,7 @@ import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     ButtonModule,
@@ -55,10 +62,21 @@ import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
     MatIconModule,
     MatButtonModule,
     MatExpansionModule,
-    AccordionModule
+    AccordionModule,
+    FormsModule,
+    ReactiveFormsModule,
     
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    AllApiService,
+    AuthService,
+    CookieService
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

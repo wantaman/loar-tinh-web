@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from '../core/product';
+import { AllApiService } from '../core/all-api.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,8 @@ import { Product } from '../core/product';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
+  dataProduct:any[] = []
   images: string[] = [
     'assets/images/slider1.webp',
     'assets/images/slider2.webp',
@@ -15,7 +18,7 @@ export class HomeComponent {
 
   responsiveOptions: any[] | undefined;
 
-  constructor() { }
+  constructor(private allApi: AllApiService) { }
 
   ngOnInit() {
     this.responsiveOptions = [
@@ -35,5 +38,16 @@ export class HomeComponent {
         numScroll: 1
       }
     ];
+
+    this.getAllProduct()
+  }
+
+  getAllProduct(){
+    this.allApi.getAllData(this.allApi.productUrl).subscribe(
+      (data: any) =>{
+        this.dataProduct = data['results']
+        console.log('data respon', this.dataProduct)
+      }
+    )
   }
 }
