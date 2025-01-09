@@ -1,24 +1,16 @@
 /* HTML: <div class="loader"></div> */
 
-body{
-    overflow: hidden;
-}
 .box-loading {
-    background-color: rgba(0, 0, 0, 0.312);
+    // background-color: rgba(0, 0, 0, 0.312);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     z-index: 9999;
-    overflow: hidden;
+    margin-top: 80px;
 }
 
 .loader {
-    width: 45px;
+    width: 35px;
     aspect-ratio: .75;
     --c: no-repeat linear-gradient(#000 0 0);
     background:

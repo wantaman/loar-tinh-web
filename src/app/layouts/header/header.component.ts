@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MegaMenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { GeneralFunctionService } from 'src/app/core/function/general-function.service';
+import { SearchFormComponent } from 'src/app/search-form/search-form.component';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +14,10 @@ export class HeaderComponent {
 
 
     visible: boolean = false;
-    
+    visiblesignUp: boolean = false;
+    isPasswordVisible: boolean = false;
+
+
     menuItems = [
         {
             name: 'Women',
@@ -41,6 +47,18 @@ export class HeaderComponent {
         }
     ];
 
+    constructor(
+        private allFunction: GeneralFunctionService,
+        public dialog: MatDialog,
+    ) {
+
+    }
+
+
+    togglePasswordVisibility(): void {
+        this.isPasswordVisible = !this.isPasswordVisible;
+    }
+
     showSubmenu(item: any) {
         item.showSubmenu = true;
     }
@@ -50,10 +68,40 @@ export class HeaderComponent {
     }
 
 
-    showDialog() {
+    showDialoglogin() {
         this.visible = true;
     }
 
+    showDialogsingup() {
+        this.visiblesignUp = true;
+    }
+
+
+    openForm(type: 'add' | 'edit', data?: any) {
+        let tmp_DialogData: any = {
+            size: "medium",
+            type: type,
+            form_name: 'search'
+        }
+        const dialogRef = this.dialog.open(SearchFormComponent,
+            this.allFunction.dialogData(
+                tmp_DialogData.size,
+                tmp_DialogData.type,
+                tmp_DialogData.form_name,
+                data
+            )
+        )
+        dialogRef.afterClosed().subscribe(
+            result => {
+                if (result) {
+                    if (result.is_refresh) {
+
+                    }
+                }
+                console.log('close', result)
+            }
+        )
+    }
 
 }
 

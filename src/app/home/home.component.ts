@@ -1,6 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AllApiService } from '../core/all-api.service';
 import { Router } from '@angular/router';
+import { GeneralFunctionService } from '../core/function/general-function.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchFormComponent } from '../search-form/search-form.component';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +22,14 @@ export class HomeComponent {
   ];
   responsiveOptions: any[] | undefined;
 
-  constructor(private allApi: AllApiService, private router: Router) { }
+  constructor(
+    private allApi: AllApiService,
+    private router: Router,
+    private allFunction: GeneralFunctionService,
+    public dialog: MatDialog,
+  ) {
+
+  }
 
   ngOnInit() {
     this.responsiveOptions = [
@@ -45,7 +55,7 @@ export class HomeComponent {
   }
 
   gotoPageViewMore(cate: any) {
-    console.log(cate); 
+    console.log(cate);
     this.router.navigate(
       ['shop-more'],
       {
@@ -55,7 +65,7 @@ export class HomeComponent {
   }
 
   gotoPage(product: any) {
-    console.log(product); 
+    console.log(product);
     this.router.navigate(
       ['detail-product'],
       {
@@ -107,5 +117,31 @@ export class HomeComponent {
     }, {});
 
     this.groupedProducts = Object.values(grouped);
+  }
+
+  openForm(type: 'add' | 'edit', data?: any) {
+    let tmp_DialogData: any = {
+      size: "medium",
+      type: type,
+      form_name: 'slide-show'
+    }
+    const dialogRef = this.dialog.open(SearchFormComponent,
+      this.allFunction.dialogData(
+        tmp_DialogData.size,
+        tmp_DialogData.type,
+        tmp_DialogData.form_name,
+        data
+      )
+    )
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result) {
+          if (result.is_refresh) {
+            
+          }
+        }
+        console.log('close', result)
+      }
+    )
   }
 }

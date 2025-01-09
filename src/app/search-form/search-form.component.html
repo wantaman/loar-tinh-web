@@ -1,0 +1,25 @@
+<div class="search-container mt-4">
+    <label for="search-input" class="search-label">
+        <i class="material-icons search-icon">search</i>
+    </label>
+    <input id="search-input" (keyup)="onSearch()" placeholder="What are you looking for?" type="text"
+        [(ngModel)]="search_key" class="search-field" />
+    <mat-icon (click)="closeForm()" class="close-icon">close</mat-icon>
+</div>
+<hr>
+
+<div class="data-view" *ngIf="!loadingGet">
+    <div class="product-list" *ngFor=" let data of resultData">
+        <div class="product-item" (click)="gotoPage(data.id)">
+            <img [src]="data.thumbnail"
+                 alt="Aaron Gordon AG V: Denver" class="product-image" />
+            <div class="product-details">
+                <p class="product-name">{{ data.name }}</p>
+                <p class="product-price">US {{ data.unitPrice | currency }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<span class="no-data" *ngIf="!loadingGet && resultData.length <= 0 ">No results could be found.</span>
+<app-loading [isLoading]="loadingGet"></app-loading>
+

@@ -44,6 +44,10 @@
           }
       }
   }
+
+  .mat-icon{
+    cursor: pointer;
+  }
 }
 
 // Responsive Styles
@@ -137,3 +141,5 @@
     color: #666;     /* Adjust color */
     margin-right: 10px; /* Adjust spacing */
 }
+
+

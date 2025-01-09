@@ -24,9 +24,8 @@ import { AccordionModule } from 'primeng/accordion';
 
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule} from '@angular/material/expansion';
 import { AllApiService } from './core/all-api.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
@@ -38,6 +37,11 @@ import { LoadingComponent } from './shared/components/loading/loading.component'
 import { LoadingCompanyComponent } from './shared/components/loading-company/loading-company.component';
 import { ViewMoreComponent } from './view-more/view-more.component';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SearchFormComponent } from './search-form/search-form.component';
+import {InputTextModule} from 'primeng/inputtext';
+import {DropdownModule} from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,8 @@ import { AnimateOnScrollModule } from 'primeng/animateonscroll';
     DetialProductComponent,
     LoadingComponent,
     LoadingCompanyComponent,
-    ViewMoreComponent
+    ViewMoreComponent,
+    SearchFormComponent
   ],
   imports: [
     BrowserModule,
@@ -72,8 +77,11 @@ import { AnimateOnScrollModule } from 'primeng/animateonscroll';
     FormsModule,
     ReactiveFormsModule,
     DialogModule,
-    AnimateOnScrollModule
-    
+    AnimateOnScrollModule,
+    MatDialogModule,
+    InputTextModule,
+    DropdownModule,
+    CheckboxModule
   ],
   providers: [
     {
