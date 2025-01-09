@@ -1,24 +1,30 @@
-<div class="container">
+<div  style="background-color: rgba(238, 238, 238, 0.563);">
+    <div class="container" style="display: flex; align-items: center; ">
 
-    <div class="menu">
-        <ul class="list-unstyled mb-0">
-            <li><a href="#">Women</a></li>
-            <li><a href="#">Men</a></li>
-            <li><a href="#">Boys</a></li>
-            <li><a href="#">Girls</a></li>
-        </ul>
-    </div>
+        <div class="menu">
+            <ul class="list-unstyled mb-0">
+                <li><a href="#">Women</a></li>
+                <li><a href="#">Men</a></li>
+                <li><a href="#">Boys</a></li>
+                <li><a href="#">Girls</a></li>
+            </ul>
+        </div>
 
-    <div class="logo-company">
-        <img height="30px" src="../../../assets/images/logo navbar.png" alt="Logo">
-    </div>
+        <div class="logo-company">
+            <img height="40px" src="../../../assets/images/logo navbar.png" alt="Logo">
+        </div>
 
-    <div class="auth-links text-end">
-        
-        <a (click)="showDialog()" href="#">Login</a>
-        <a (click)="showDialog()" href="#">Sign Up</a>
+        <div class="auth-links" style="display: flex; align-items: center;">
+            <mat-icon class="custom-icon">notifications</mat-icon>
+            <mat-icon class="custom-icon">favorite</mat-icon>
+            <mat-icon class="custom-icon">shopping_bag</mat-icon>
+            <a (click)="showDialog()" href="#">Login</a>
+            <a (click)="showDialog()" href="#">Sign Up</a>
+        </div>
+
     </div>
 </div>
+
 
 <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
     <!-- Header Section -->
@@ -36,7 +42,8 @@
         <!-- Password Input -->
         <div class="flex items-center gap-4 mb-4">
             <label for="password" class="font-semibold w-24">Password</label>
-            <input pInputText id="password" name="password" class="flex-auto" type="password" autocomplete="off" required />
+            <input pInputText id="password" name="password" class="flex-auto" type="password" autocomplete="off"
+                required />
         </div>
     </div>
 
@@ -44,7 +51,7 @@
     <ng-template #footer>
         <div class="p-d-flex p-jc-between">
             <p-button label="Cancel" [text]="true" severity="secondary" (click)="visible = false" />
-            <p-button label="Login" [outlined]="true" severity="primary"  />
+            <p-button label="Login" [outlined]="true" severity="primary" />
         </div>
     </ng-template>
 </p-dialog>

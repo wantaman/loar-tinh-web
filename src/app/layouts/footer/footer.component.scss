@@ -1,7 +1,7 @@
 /* Footer Section */
 .nav-section {
-    background-color: #333;
-    color: #fff;
+    background-color: rgba(238, 238, 238, 0.563);
+    color: grey;
     padding-top: 40px;
     padding-bottom: 40px;
     
@@ -25,12 +25,12 @@
       .logo {
         display: block;
         margin-bottom: 10px;
-        height: 40px; // Set the logo height as per your requirement
+        height: 40px; 
       }
   
       .copy-right {
         font-size: 14px;
-        color: #bbb;
+        color: rgb(53, 52, 52);
       }
     }
   
@@ -38,12 +38,12 @@
     h5 {
       font-size: 18px;
       margin-bottom: 15px;
-      color: #fff;
+      color: rgb(53, 52, 52);
     }
   
     .footer-text {
       font-size: 14px;
-      color: #bbb;
+      color: rgb(53, 52, 52);
       margin: 5px 0;
   
       i {

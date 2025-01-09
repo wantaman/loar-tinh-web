@@ -17,7 +17,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import {CarouselModule} from 'primeng/carousel';
-import {DialogModule} from 'primeng/dialog';
 import { DetialProductComponent } from './detial-product/detial-product.component';
 
 import { GalleriaModule } from 'primeng/galleria';
@@ -34,6 +33,11 @@ import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './core/auth/auth.service';
+import { DialogModule } from 'primeng/dialog';
+import { LoadingComponent } from './shared/components/loading/loading.component';
+import { LoadingCompanyComponent } from './shared/components/loading-company/loading-company.component';
+import { ViewMoreComponent } from './view-more/view-more.component';
+import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,10 @@ import { AuthService } from './core/auth/auth.service';
     MainComponent,
     FooterComponent,
     HeaderComponent,
-    DetialProductComponent
+    DetialProductComponent,
+    LoadingComponent,
+    LoadingCompanyComponent,
+    ViewMoreComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,6 @@ import { AuthService } from './core/auth/auth.service';
     MatFormFieldModule,
     MatInputModule,
     CarouselModule,
-    DialogModule,
     MatButtonToggleModule,
     MatIconModule,
     MatButtonModule,
@@ -65,6 +71,8 @@ import { AuthService } from './core/auth/auth.service';
     AccordionModule,
     FormsModule,
     ReactiveFormsModule,
+    DialogModule,
+    AnimateOnScrollModule
     
   ],
   providers: [

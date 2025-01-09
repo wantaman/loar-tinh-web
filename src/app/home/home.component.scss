@@ -26,7 +26,7 @@
 }
 
 /* SCSS for Card and Game Container */
-.game-container {
+.product-container {
     margin-bottom: 15px;
     .card {
         border: none;
@@ -41,5 +41,35 @@
     .card-img-top {
         width: 100%;
         height: auto;
+    }
+}
+
+
+
+/* Fade in animation */
+.animate-fadein {
+    animation: fadein 2.5s ease-out forwards;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Fade out animation */
+.animate-fadeout {
+    animation: fadeout 2s ease-in forwards;
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }

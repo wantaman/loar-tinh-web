@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './layouts/main/main.component';
+import { DetialProductComponent } from './detial-product/detial-product.component';
+import { ViewMoreComponent } from './view-more/view-more.component';
 
 const routes: Routes = [
   {
@@ -16,7 +18,12 @@ const routes: Routes = [
       {
         path: 'detail-product', 
         canActivate : [],
-        component : HomeComponent, 
+        component : DetialProductComponent, 
+      },
+      {
+        path: 'shop-more', 
+        canActivate : [],
+        component : ViewMoreComponent, 
       },
     ]  
   }

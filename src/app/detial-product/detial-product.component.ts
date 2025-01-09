@@ -1,29 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoService } from '../core/photo.service';
+import { AllApiService } from '../core/all-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detial-product',
   templateUrl: './detial-product.component.html',
   styleUrls: ['./detial-product.component.scss']
 })
-export class DetialProductComponent  {
-  images: any[] = [
-    {
-      itemImageSrc: 'assets/images/slider1.webp',
-      thumbnailImageSrc: 'assets/images/slider1.webp',
-      alt: 'Description for Image 1'
-    },
-    {
-      itemImageSrc: 'assets/images/slider2.webp',
-      thumbnailImageSrc: 'assets/images/slider2.webp',
-      alt: 'Description for Image 2'
-    },
-    {
-      itemImageSrc: 'assets/images/slider3.webp',
-      thumbnailImageSrc: 'assets/images/slider3.webp',
-      alt: 'Description for Image 3'
-    }
-  ];
+export class DetialProductComponent implements OnInit {
+  productId: string | null = null;
+  dataDetail: any;
+  images: any[] = [];
+  activeIndex: number = 0;
+  quantity: number = 1;
 
   responsiveOptions: any[] = [
     {
@@ -39,4 +28,53 @@ export class DetialProductComponent  {
       numVisible: 1
     }
   ];
+
+  constructor(
+    private allApi: AllApiService,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.productId = params['product_id'];
+      if (this.productId) {
+        this.getDetail();
+      }
+      console.log('Product ID:', this.productId);
+    });
+  }
+
+  ngOnInit() { }
+
+  getDetail() {
+    this.allApi.getDataDetailById(this.allApi.productUrl, this.productId).subscribe(
+      (data: any) => {
+        this.dataDetail = data.data;
+        this.images = this.dataDetail.images.map((imageUrl: string) => ({
+          itemImageSrc: imageUrl,
+          thumbnailImageSrc: imageUrl,
+          alt: 'Product Image'
+        }));
+        console.log('Product details:', this.dataDetail);
+      }
+    );
+  }
+
+  // Increase quantity
+  increaseQuantity() {
+    this.quantity++;
+  }
+
+  // Decrease quantity
+  decreaseQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  // Handle direct input change
+  onQuantityChange(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.quantity = Math.max(1, parseInt(inputValue, 10)); 
+  }
+  
 }
+

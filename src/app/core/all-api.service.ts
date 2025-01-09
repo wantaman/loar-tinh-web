@@ -9,7 +9,8 @@ export class AllApiService {
   baseApi = environment.baseAPI;
   finalBaseApi = this.baseApi + "api";
 
-  productUrl = '/products';
+  productUrl = '/public/products';
+  categoryUrl = '/public/categories';
 
   constructor(
     private http: HttpClient,
@@ -48,7 +49,7 @@ export class AllApiService {
         }
       });
     }
-    return this.http.get(this.finalBaseApi + url + id + '/', { params: myParams })
+    return this.http.get(this.finalBaseApi + url + '/' + id , { params: myParams })
   }
 
   getDataDetailByIdNoPagination(url: any, id: any) {
