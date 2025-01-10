@@ -11,6 +11,8 @@ export class AllApiService {
 
   productUrl = '/public/products';
   categoryUrl = '/public/categories';
+  loginUrl = '/auth/login'
+  registerUrl = '/auth/register'
 
   constructor(
     private http: HttpClient,
@@ -66,6 +68,16 @@ export class AllApiService {
     return this.http.post(this.finalBaseApi + url, data);
   }
 
+  loginData(url: any, data: any, options?: any) {
+  
+    return this.http.post(this.finalBaseApi + url, data, options);
+  }
+
+  signupData(url: any, data: any, options?: any) {
+  
+    return this.http.post(this.finalBaseApi + url, data, options);
+  }
+  
   editData(url: any, data: any, id: any) {
     return this.http.patch(this.finalBaseApi + url + id + '/', data);
   }

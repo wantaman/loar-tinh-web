@@ -17,40 +17,37 @@ export class GeneralFunctionService {
   }
  
 
-  //The set method is use for encrypt the value.
-  encryptFileForLocal(keys:any, value:any){
+  //** method encrypt value */
+  encryptFileForLocal(keys: any, value: any) {
     var key = CryptoJS.enc.Utf8.parse(keys);
     var iv = CryptoJS.enc.Utf8.parse(keys);
-    var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value.toString()), key,
-    {
+    var encryptd = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value.toString()), key, {
+      keySize: 128 / 8,
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+    return encryptd.toString();
+  }
+
+  //** method decrypt value */
+  decryptFileForLocal(keys: any, value: any) {
+    if (value != null) {
+      var key = CryptoJS.enc.Utf8.parse(keys);
+      var iv = CryptoJS.enc.Utf8.parse(keys);
+      var decrypted = CryptoJS.AES.decrypt(value, key, {
         keySize: 128 / 8,
         iv: iv,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
-    });
-
-    return encrypted.toString();
-  }
-
-  //The get method is use for decrypt the value.
-  decryptFileForLocal(keys:any, value:any){
-    if(value != null){
-      var key = CryptoJS.enc.Utf8.parse(keys);
-      var iv = CryptoJS.enc.Utf8.parse(keys);
-      var decrypted = CryptoJS.AES.decrypt(value, key, {
-          keySize: 128 / 8,
-          iv: iv,
-          mode: CryptoJS.mode.CBC,
-          padding: CryptoJS.pad.Pkcs7
       });
-  
-        return decrypted.toString(CryptoJS.enc.Utf8); 
+
+      return decrypted.toString(CryptoJS.enc.Utf8);
     }
-    else{
+    else {
       return null;
     }
   }
-
 
 
   closeDialog(form_name: any) {
@@ -65,7 +62,7 @@ export class GeneralFunctionService {
 
   dialogData(size: 'medium' | 'large' | 'extra large', type?: 'add' | 'edit' | 'reset' | 'view', form_name?: any, data?: any) {
     let width = '100%'
-    if (size == 'medium') { width = '500px' }
+    if (size == 'medium') { width = '400px' }
     else if (size == 'large') { width = '1000px' }
     else if (size == 'extra large') { width = '1200px' }
     let tmp_data: any = {

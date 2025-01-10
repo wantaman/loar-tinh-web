@@ -1,3 +1,4 @@
+
 <div style="background-color: rgba(238, 238, 238, 0.563);">
     <div class="container" style="display: flex; align-items: center; ">
 
@@ -19,146 +20,187 @@
             <mat-icon class="custom-icon">notifications</mat-icon>
             <mat-icon class="custom-icon">favorite</mat-icon>
             <mat-icon class="custom-icon">shopping_bag</mat-icon>
-            <a (click)="showDialoglogin()" href="#">Login</a>
-            <a (click)="showDialogsingup()" href="#">Sign Up</a>
+
+            <!-- login and register -->
+            <a *ngIf="userData == null" (click)="showDialoglogin()" href="#">Login</a>
+            <a *ngIf="userData == null" (click)="showDialoglogin()" href="#">Sign Up</a>
+
+            <!-- show profile account user  -->
+            <div *ngIf="!checkAfterLogin && userData != null">
+                <div class="nav-item user_profile">
+                    <button mat-button [matMenuTriggerFor]="profilemenu">
+                        <div class="chip dropdown-toggle" ngbDropdownToggle>
+                            <ng-container>
+                                <img [src]="Avatar" class="rounded-circle" width="32" height="32" alt="User">
+                            </ng-container>
+                        </div>
+                    </button>
+                    <mat-menu #profilemenu="matMenu" class="profile-menu">
+                        <div class="noti-list">
+                            <div class="menu ">
+                                <div class="user_dw_menu">
+                                    <button mat-menu-item (click)="openForm('edit')">
+                                        <app-feather-icons [icon]="'user'"
+                                            [class]="'user-menu-icons'"></app-feather-icons>Profile
+                                    </button>
+                                    <button mat-menu-item (click)="logout()">
+                                        <app-feather-icons [icon]="'log-out'"
+                                            [class]="'user-menu-icons'"></app-feather-icons>Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
         </div>
 
     </div>
 </div>
 
 
+
+<!-- dailog popup form login and register -->
 <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
-    <ng-template pTemplate="header">
-        <div class="font-bold cursor-pointer border-b-2 border-primary">LOGIN</div>
-        <div class="text-center">
-            <button class="p-dialog-header-icon" (click)="visible = false">
+    <p-tabView class="custom-tabView">
+        <p-tabPanel header="Login" [style]="{ 'text-decoration': 'none'}">
+            <div class="flex flex-column">
+                <div>
+                    <form [formGroup]="inputGroup">
 
-            </button>
-        </div>
-    </ng-template>
+                        <!-- Email -->
+                        <div class="form-group mt-3">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" formControlName="email" class="form-control mt-2"
+                                id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
 
-    <div class="flex flex-column">
-        <div>
-            <div class="p-field" style="font-size: 15px;">
-                <label class="col-md-12" for="username1">Username</label>
-                <input class="col-md-12 mt-2" id="username1" type="username" aria-describedby="username1-help"
-                    placeholder="Email" pInputText />
-            </div>
+                        <!-- Password -->
+                        <div class="form-group mt-3">
+                            <label for="exampleInputPassword1">Password</label>
+                            <div class="input-group mt-2">
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+                                    class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                                <span class="input-group-text" (click)="togglePasswordVisibility()"
+                                    style="cursor: pointer;">
+                                    <i [class]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+                                </span>
+                            </div>
+                        </div>
 
-            <div class="p-field" style="font-size: 15px;">
-                <label class="col-md-12" for="username1">Username</label>
-                <div class="p-inputgroup">
-                    <input pInputText class="col-md-10 mt-2" id="username1"
-                        [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Username" />
-                    <div class="col-md-2 p-inputgroup-addon" (click)="togglePasswordVisibility()">
-                        <i [class]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer;"></i>
-                    </div>
+                        <!-- Register Button -->
+                        <button type="submit" class="btn btn-dark mt-3 w-100" (click)="login()">
+                            <app-loading-button></app-loading-button> LOGIN
+                        </button>
+                        <div class="text-center text-gray-500 mt-2">OR</div>
+                    </form>
+
                 </div>
-                <small class="mt-1" id="username1-help">Enter your username to reset your password.</small>
-            </div>
-        </div>
 
-        <button pButton label="LOGIN" class="mt-2 w-full p-button p-button-text p-button-lg text-bold"
-            style=" background-color: #000; color: #fff; width: 100%; border-radius: 4px; font-size: 14px;"></button>
-
-        <div style="text-align: center;" class="mt-2 mb-2">
-            <a style="cursor: pointer; text-decoration: underline;" class=" cursor-pointer text-primary">Forgot your
-                password?</a>
-        </div>
-
-
-        <div class="text-center text-gray-500">OR</div>
-
-        <div class="">
-            <button pButton label="Continue with Google" style="width: 100%;"
-                class="mt-2 p-button-outlined flex items-center gap-3 justify-center p-button-lg">
-                <img src="../../../assets/images/facebook.png" alt="Google" />
-            </button>
-            <button pButton label="Continue with Facebook" style="width: 100%;"
-                class=" mt-3 p-button-outlined flex items-center gap-3 justify-center p-button-lg"
-                [style]="{ color: '#4267B2' }">
-                <img src="../../../assets/images/facebook.png" alt="Facebook" />
-            </button>
-        </div>
-
-        <div class="text-center mt-3">
-            <span>New to ZANDO?</span>
-            <a class="text-primary cursor-pointer">Register</a>
-        </div>
-    </div>
-</p-dialog>
-
-
-<p-dialog [(visible)]="visiblesignUp" [modal]="true" [style]="{ width: '25rem' }">
-    <ng-template pTemplate="header">
-        <div class="font-bold cursor-pointer border-b-2 border-primary">REGISTER</div>
-        <div class="text-center">
-            <button class="p-dialog-header-icon" (click)="visible = false"></button>
-        </div>
-    </ng-template>
-
-    <div class="flex flex-column">
-        <div>
-            <div class="p-field" style="font-size: 15px;">
-                <label class="col-md-12" for="email">Email</label>
-                <input class="col-md-12 mt-2" id="email" type="email" aria-describedby="email-help" placeholder="Email"
-                    pInputText />
-            </div>
-
-            <div class="p-field" style="font-size: 15px;">
-                <label class="col-md-12" for="password">Password</label>
-                <div class="p-inputgroup">
-                    <input pInputText class="col-md-10 mt-2" id="password"
-                        [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Password" />
-                    <div class="col-md-2 p-inputgroup-addon" (click)="togglePasswordVisibility()">
-                        <i [class]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer;"></i>
-                    </div>
+                <div>
+                    <button pButton label="Continue with Google" style="width: 100%; height: 45px;"
+                        class="mt-2 p-button-outlined flex items-center gap-3 justify-center p-button-lg">
+                        <img width="25px" src="../../../assets/images/Google.png" alt="Google" />
+                    </button>
+                    <button pButton label="Continue with Facebook" style="width: 100%; height: 45px;"
+                        class=" mt-3 p-button-outlined flex items-center gap-3 justify-center p-button-lg"
+                        [style]="{ color: '#4267B2' }">
+                        <img width="25px" src="../../../assets/images/facebook.png" alt="Facebook" />
+                    </button>
                 </div>
-                <small class="mt-1" id="password-help">Enter your password to reset your account.</small>
-            </div>
 
-            <div class="p-field" style="font-size: 15px;">
-                <label class="col-md-12" for="gender">Gender</label>
-                <div class="row">
-                    <div class="col-md-4 form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="male">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Male
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="female"
-                            checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Female
-                        </label>
-                    </div>
+                <div class="text-center mt-3">
+                    <span>New to ZANDO?</span>
+                    <a class="text-primary cursor-pointer">Register</a>
                 </div>
             </div>
+        </p-tabPanel>
 
+        <p-tabPanel header="Register">
+            <div class="flex flex-column">
+                <div>
+                    <form [formGroup]="inputGroup">
+                        <!-- Gender -->
+                        <div>
+                            <label class="form-check-label me-2" for="inlineRadio3">Gender</label>
 
-        </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" formControlName="gender" type="radio" name="gender"
+                                    id="inlineRadio1" value="MALE">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" formControlName="gender" type="radio" name="gender"
+                                    id="inlineRadio2" value="FEMALE">
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                            </div>
+                        </div>
 
-        <button pButton label="REGISTER" class="mt-2 w-full p-button p-button-text p-button-lg text-bold"
-            style=" background-color: #000; color: #fff; width: 100%; border-radius: 4px; font-size: 14px;"></button>
+                        <!-- Email -->
+                        <div class="form-group mt-3">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input type="text" class="form-control mt-2" formControlName="name" id="exampleInputEmail1"
+                                placeholder="Enter name" required>
+                        </div>
 
-        <div class="text-center text-gray-500">OR</div>
+                        <!-- Email -->
+                        <div class="form-group mt-3">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" formControlName="email" class="form-control mt-2"
+                                id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
 
-        <div class="">
-            <button pButton label="Continue with Google" style="width: 100%;"
-                class="mt-2 p-button-outlined flex items-center gap-3 justify-center p-button-lg">
-                <img src="../../../assets/images/facebook.png" alt="Google" />
-            </button>
-            <button pButton label="Continue with Facebook" style="width: 100%;"
-                class=" mt-3 p-button-outlined flex items-center gap-3 justify-center p-button-lg"
-                [style]="{ color: '#4267B2' }">
-                <img src="../../../assets/images/facebook.png" alt="Facebook" />
-            </button>
-        </div>
+                        <!-- Password -->
+                        <div class="form-group mt-3">
+                            <label for="exampleInputPassword1">Password</label>
+                            <div class="input-group mt-2">
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+                                    class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <span class="input-group-text" (click)="togglePasswordVisibility()"
+                                    style="cursor: pointer;">
+                                    <i [class]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+                                </span>
+                            </div>
+                        </div>
 
-        <div class="text-center mt-3">
-            <span>New to ZANDO?</span>
-            <a class="text-primary cursor-pointer">Register</a>
-        </div>
-    </div>
+                        <div class="form-group mt-3">
+                            <label for="exampleInputPassword1">Comfrim Password</label>
+                            <div class="input-group mt-2">
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                    formControlName="confirmationPassword" id="exampleInputPassword1"
+                                    placeholder="Comfrim Password">
+                                <span class="input-group-text" (click)="togglePasswordVisibility()"
+                                    style="cursor: pointer;">
+                                    <i [class]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button type="submit" class="btn btn-dark mt-3 w-100" (click)="signup()">REGISTER</button>
+                        <div class="text-center text-gray-500 mt-2">OR</div>
+                    </form>
+
+                </div>
+
+                <div>
+                    <button pButton label="Continue with Google" style="width: 100%; height: 45px;"
+                        class="mt-2 p-button-outlined flex items-center gap-3 justify-center p-button-lg">
+                        <img width="25px" src="../../../assets/images/Google.png" alt="Google" />
+                    </button>
+                    <button pButton label="Continue with Facebook" style="width: 100%; height: 45px;"
+                        class=" mt-3 p-button-outlined flex items-center gap-3 justify-center p-button-lg"
+                        [style]="{ color: '#4267B2' }">
+                        <img width="25px" src="../../../assets/images/facebook.png" alt="Facebook" />
+                    </button>
+                </div>
+
+                <div class="text-center mt-3">
+                    <span>New to ZANDO?</span>
+                    <a class="text-primary cursor-pointer">Login</a>
+                </div>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+
 </p-dialog>

@@ -42,6 +42,8 @@ import { SearchFormComponent } from './search-form/search-form.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TabViewModule } from 'primeng/tabview';
+import { LoadingButtonComponent } from './shared/components/loading-button/loading-button.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     LoadingComponent,
     LoadingCompanyComponent,
     ViewMoreComponent,
-    SearchFormComponent
+    SearchFormComponent,
+    LoadingButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     MatDialogModule,
     InputTextModule,
     DropdownModule,
-    CheckboxModule
+    CheckboxModule,
+    TabViewModule
   ],
   providers: [
     {

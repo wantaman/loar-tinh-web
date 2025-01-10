@@ -3,35 +3,43 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders } fro
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { AuthService} from '../../core/auth/auth.service' 
+import { AuthService } from '../../core/auth/auth.service';
 import { GeneralFunctionService } from '../../core/function/general-function.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
-              private cookieService: CookieService,
-              private router: Router,
-              private allFunction : GeneralFunctionService,
-              private auth: AuthService) {}
+    private cookieService: CookieService,
+    private router: Router,
+    private allFunction: GeneralFunctionService,
+    private auth: AuthService
+  ) { }
 
-  intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authReq ;
-    if (this.cookieService.check('token')) {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('token');
+
+    let authReq = req.clone({
+      headers: req.headers.set('Authorization', 'sid ' + environment.base_token)
+    });
+
+    if (token) {
+      // Decrypt the token if necessary
+      const decryptedToken = this.allFunction.decryptFileForLocal(environment.localEncriptKey, token);
       authReq = req.clone({
-        headers: req.headers
-        .set('Authorization', 'sid ' + 
-        this.allFunction.decryptFileForLocal(this.allFunction.environment.localEncriptKey,
-          this.cookieService.get('token')))
+        headers: req.headers.set('Authorization', 'sid ' + decryptedToken)
       });
-   } else {
-      //# remove profile token expire 
-      localStorage.removeItem('profile')
+    } else {
+      // If no token is available, proceed with Basic Auth
+      const username = environment.Username;  // Replace with actual username
+      const password = environment.Password;  // Replace with actual password
+      const basicAuthCredentials = btoa(username + ':' + password);  // Encode username and password in base64
+
       authReq = req.clone({
-        headers: req.headers.set('Authorization','sid '+ environment.base_token)
+        headers: req.headers.set('Authorization', 'Basic ' + basicAuthCredentials)
       });
-      // this.router.navigate(['/sign-in']);
-   }
-   return next.handle(authReq);
-}
+    }
+
+    return next.handle(authReq);
+  }
 }

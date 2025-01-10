@@ -132,7 +132,7 @@
 }
 
 .p-button {
-  width: 48%;  /* Adjust button width for better spacing */
+  width: 48%;  
 }
 
 
@@ -143,3 +143,7 @@
 }
 
 
+
+.p-tabview .p-tabview-nav li a {
+    text-decoration: none !important;
+}
