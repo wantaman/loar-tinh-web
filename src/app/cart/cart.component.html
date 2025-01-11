@@ -1,0 +1,27 @@
+<div class="search-container mt-4">
+    <mat-icon (click)="closeForm()" class="close-icon">close</mat-icon>
+</div>
+<hr>
+
+<div class="data-view" *ngIf="!loadingGet">
+    <div class="product-list" *ngFor=" let data of resultData">
+        <div class="product-item" (click)="gotoPage(data.id)">
+            <img [src]="data.product.thumbnail" alt="Aaron Gordon AG V: Denver" class="product-image" />
+            <div class="product-details">
+                <p class="product-name">{{ data.product.name }}</p>
+                <p class="product-price">US {{ data.product.unitPrice | currency }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<span class="no-data" *ngIf="!loadingGet && resultData.length <= 0 ">No results could be found.</span>
+<app-loading [isLoading]="loadingGet"></app-loading>
+
+<div class="cart-summary">
+    <p class="total-price">Total Price: US {{ totalPrice | currency }}</p>
+
+    <button *ngIf="resultData.length > 0" (click)="orderProduct()" class="order-button">
+        Checkout
+    </button>
+</div>

@@ -44,6 +44,10 @@ import {DropdownModule} from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TabViewModule } from 'primeng/tabview';
 import { LoadingButtonComponent } from './shared/components/loading-button/loading-button.component';
+import { CartComponent } from './cart/cart.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -57,10 +61,12 @@ import { LoadingButtonComponent } from './shared/components/loading-button/loadi
     LoadingCompanyComponent,
     ViewMoreComponent,
     SearchFormComponent,
-    LoadingButtonComponent
+    LoadingButtonComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -85,7 +91,16 @@ import { LoadingButtonComponent } from './shared/components/loading-button/loadi
     InputTextModule,
     DropdownModule,
     CheckboxModule,
-    TabViewModule
+    TabViewModule,
+    ProgressSpinnerModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',  // Position of the toast (top-right, bottom-right, etc.)
+      timeOut: 5000, // Duration before the toast disappears (in ms)
+      progressBar: true, // Show progress bar
+      closeButton: true, // Add close button
+      easeTime: 300, // Ease duration for toast opening
+      extendedTimeOut: 1000 // Delay before toast closes after user interaction
+    }),
   ],
   providers: [
     {

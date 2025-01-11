@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row mt-4">
+    <div class="row mt-4 mb-4">
         <!-- First Gallery Column -->
         <div class="col-lg-8 col-md-8 col-sm-12">
             <p-galleria [value]="images" [showItemNavigators]="true" [circular]="true" [numVisible]="5"
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="mt-3">
-                    <button class="w-100 bg-primary" mat-fab extended>
+                    <button (click)="addCart()" class="w-100 bg-primary" mat-fab extended>
                         Add To Cart
                     </button>
                 </div>

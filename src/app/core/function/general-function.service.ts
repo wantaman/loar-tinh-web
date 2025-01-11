@@ -62,7 +62,7 @@ export class GeneralFunctionService {
 
   dialogData(size: 'medium' | 'large' | 'extra large', type?: 'add' | 'edit' | 'reset' | 'view', form_name?: any, data?: any) {
     let width = '100%'
-    if (size == 'medium') { width = '400px' }
+    if (size == 'medium') { width = '500px' }
     else if (size == 'large') { width = '1000px' }
     else if (size == 'extra large') { width = '1200px' }
     let tmp_data: any = {

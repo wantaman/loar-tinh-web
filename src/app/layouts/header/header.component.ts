@@ -9,6 +9,7 @@ import { AllApiService } from 'src/app/core/all-api.service';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { CartComponent } from 'src/app/cart/cart.component';
 
 @Component({
     selector: 'app-header',
@@ -65,6 +66,7 @@ export class HeaderComponent implements OnInit {
     hideSubmenu(item: any) {
         item.showSubmenu = false;
     }
+
 
     login() {
         this.checkAfterLogin = true;
@@ -176,6 +178,34 @@ export class HeaderComponent implements OnInit {
             }
         )
     }
+
+
+    openFormCart(type: 'add' | 'edit', data?: any) {
+        let tmp_DialogData: any = {
+            size: "medium",
+            type: type,
+            form_name: 'cart'
+        }
+        const dialogRef = this.dialog.open(CartComponent,
+            this.allFunction.dialogData(
+                tmp_DialogData.size,
+                tmp_DialogData.type,
+                tmp_DialogData.form_name,
+                data
+            )
+        )
+        dialogRef.afterClosed().subscribe(
+            result => {
+                if (result) {
+                    if (result.is_refresh) {
+
+                    }
+                }
+                console.log('close', result)
+            }
+        )
+    }
+
 
     logout(){
         console.log("logout")

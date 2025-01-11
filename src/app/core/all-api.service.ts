@@ -11,8 +11,10 @@ export class AllApiService {
 
   productUrl = '/public/products';
   categoryUrl = '/public/categories';
-  loginUrl = '/auth/login'
-  registerUrl = '/auth/register'
+  loginUrl = '/auth/login';
+  registerUrl = '/auth/register';
+  cartUrl = '/carts';
+  orderUrl = '/orders';
 
   constructor(
     private http: HttpClient,

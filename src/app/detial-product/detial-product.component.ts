@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AllApiService } from '../core/all-api.service';
 import { ActivatedRoute } from '@angular/router';
+import { NGXToastrService } from '../core/function/toast.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-detial-product',
@@ -13,6 +15,14 @@ export class DetialProductComponent implements OnInit {
   images: any[] = [];
   activeIndex: number = 0;
   quantity: number = 1;
+  userId: any;
+  token:any
+
+  // inputGroup = new FormGroup({
+  //   userId: new FormControl('', Validators.required),
+  //   clothesProductId: new FormControl('', Validators.required),
+  //   quantity: new FormControl('', Validators.required)
+  // })
 
   responsiveOptions: any[] = [
     {
@@ -31,7 +41,8 @@ export class DetialProductComponent implements OnInit {
 
   constructor(
     private allApi: AllApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private ToastrService: NGXToastrService,
   ) {
     this.route.queryParams.subscribe(params => {
       this.productId = params['product_id'];
@@ -40,9 +51,21 @@ export class DetialProductComponent implements OnInit {
       }
       console.log('Product ID:', this.productId);
     });
+
+    const userString = localStorage.getItem('user'); 
+    const user = userString ? JSON.parse(userString) : null; 
+    this.userId = user.data.user.id;
+
+    this.token = localStorage.getItem('token')?.replace(/"/g, '') || null;
+    console.log('Sanitized token:', this.token);
+    
   }
 
   ngOnInit() { }
+
+  // get f() {
+  //   return this.inputGroup.controls
+  // }
 
   getDetail() {
     this.allApi.getDataDetailById(this.allApi.productUrl, this.productId).subscribe(
@@ -73,8 +96,26 @@ export class DetialProductComponent implements OnInit {
   // Handle direct input change
   onQuantityChange(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
-    this.quantity = Math.max(1, parseInt(inputValue, 10)); 
+    this.quantity = Math.max(1, parseInt(inputValue, 10));
   }
-  
+
+  addCart() {
+    const inputData = {
+      'userId': this.userId,
+      'clothesProductId': Number(this.productId),
+      'quantity': this.quantity,
+    }
+
+    this.allApi.createData(this.allApi.cartUrl, inputData).subscribe(
+      (data: any) => {
+        console.log('add cart data sucess', data);
+        this.ToastrService.typeSuccessAddCart();
+      },
+      (err) => {
+        console.log('err add cart', err)
+      }
+    )
+  }
+
 }
 

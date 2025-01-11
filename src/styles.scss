@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
 .m-w-100 {
@@ -16,6 +23,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     from {
         transform: translateX(100%);
     }
+
     to {
         transform: translateX(0);
     }
@@ -27,4 +35,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .animate__animated {
     will-change: transform, opacity;
+}
+
+
+ngx-toastr {
+    z-index: 9999 !important;
+    /* Ensure toasts are visible */
 }
