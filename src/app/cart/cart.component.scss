@@ -1,33 +1,24 @@
 .search-container {
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    padding: 5px 10px;
-    width: 100%;
-    max-width: 100%;
-    background-color: #fff;
+    .search-header {
+        display: flex; 
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 8px;
+    }
+
+    .search-text {
+        font-size: 16px;
+        color: #333; 
+    }
+
+    .close-icon {
+        cursor: pointer;
+        font-size: 24px; 
+        color: #666;
+    }
 }
 
-.search-label {
-    margin-right: 8px;
-}
 
-.search-icon {
-    color: #000;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.search-field {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-}
-
-.search-field::placeholder {
-    color: #aaa;
-}
 
 .close-icon {
     color: #000;
@@ -107,7 +98,29 @@
     }
 }
 
-.no-data{
+
+//remove product from item style
+.delete-icon {
+    font-size: 24px;
+    color: #ff5252;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    &:hover {
+        color: #d32f2f;
+    }
+}
+
+.product-item {
+    position: relative;
+   
+}
+
+
+//no data text
+.no-data {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,32 +133,30 @@
     font-weight: 500;
 }
 
+//
 .cart-summary {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    text-align: right;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .total-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .order-button {
-    background-color: #28a745;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 10px 15px;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-button {
+    background-color: black;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-  }
-  
-  .order-button:hover {
-    background-color: #218838;
-  }
-  
+    width: 100%;
+    text-align: center;
+
+    &:hover {
+        background-color: #333;
+    }
+}

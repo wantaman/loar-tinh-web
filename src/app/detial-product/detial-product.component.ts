@@ -3,6 +3,7 @@ import { AllApiService } from '../core/all-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from '../core/function/toast.service';
 import { HttpHeaders } from '@angular/common/http';
+import { CartService } from '../core/cart.service';
 
 @Component({
   selector: 'app-detial-product',
@@ -17,6 +18,7 @@ export class DetialProductComponent implements OnInit {
   quantity: number = 1;
   userId: any;
   token:any
+  CountCart:any;
 
   // inputGroup = new FormGroup({
   //   userId: new FormControl('', Validators.required),
@@ -43,6 +45,7 @@ export class DetialProductComponent implements OnInit {
     private allApi: AllApiService,
     private route: ActivatedRoute,
     private ToastrService: NGXToastrService,
+    private cartService: CartService
   ) {
     this.route.queryParams.subscribe(params => {
       this.productId = params['product_id'];
@@ -109,6 +112,8 @@ export class DetialProductComponent implements OnInit {
     this.allApi.createData(this.allApi.cartUrl, inputData).subscribe(
       (data: any) => {
         console.log('add cart data sucess', data);
+        const newCartCount = data.data?.quantity || 1;
+        this.cartService.updateCartCount(newCartCount);
         this.ToastrService.typeSuccessAddCart();
       },
       (err) => {

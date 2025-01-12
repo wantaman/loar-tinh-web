@@ -48,6 +48,9 @@ import { CartComponent } from './cart/cart.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { CheckoutsComponent } from './checkouts/checkouts.component';
+import { CurrentLocationComponent } from './current-location/current-location.component';
+import { LocationService } from './core/location.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,9 @@ import { CommonModule } from '@angular/common';
     ViewMoreComponent,
     SearchFormComponent,
     LoadingButtonComponent,
-    CartComponent
+    CartComponent,
+    CheckoutsComponent,
+    CurrentLocationComponent
   ],
   imports: [
     BrowserModule,
@@ -93,14 +98,7 @@ import { CommonModule } from '@angular/common';
     CheckboxModule,
     TabViewModule,
     ProgressSpinnerModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-right',  // Position of the toast (top-right, bottom-right, etc.)
-      timeOut: 5000, // Duration before the toast disappears (in ms)
-      progressBar: true, // Show progress bar
-      closeButton: true, // Add close button
-      easeTime: 300, // Ease duration for toast opening
-      extendedTimeOut: 1000 // Delay before toast closes after user interaction
-    }),
+    ToastrModule.forRoot(),
   ],
   providers: [
     {
@@ -110,7 +108,8 @@ import { CommonModule } from '@angular/common';
     },
     AllApiService,
     AuthService,
-    CookieService
+    CookieService,
+    LocationService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

@@ -1,21 +1,31 @@
 <div class="search-container mt-4">
-    <mat-icon (click)="closeForm()" class="close-icon">close</mat-icon>
+    <div class="search-header">
+        <h4 class="search-text">Cart Item</h4>
+        <mat-icon (click)="closeForm()" class="close-icon">close</mat-icon>
+    </div>
 </div>
 <hr>
 
+
 <div class="data-view" *ngIf="!loadingGet">
-    <div class="product-list" *ngFor=" let data of resultData">
-        <div class="product-item" (click)="gotoPage(data.id)">
+    <div class="product-list" *ngFor="let data of resultData">
+        <div class="product-item">
             <img [src]="data.product.thumbnail" alt="Aaron Gordon AG V: Denver" class="product-image" />
             <div class="product-details">
                 <p class="product-name">{{ data.product.name }}</p>
                 <p class="product-price">US {{ data.product.unitPrice | currency }}</p>
             </div>
+            <!-- Remove/Delete Icon -->
+            <mat-icon class="delete-icon" (click)="removeFromCart(data.id)">
+                delete
+            </mat-icon>
         </div>
     </div>
 </div>
 
-<span class="no-data" *ngIf="!loadingGet && resultData.length <= 0 ">No results could be found.</span>
+<span class="no-data" *ngIf="!loadingGet && resultData?.length <= 0 ">
+    Your cart is empty
+</span>
 <app-loading [isLoading]="loadingGet"></app-loading>
 
 <div class="cart-summary">

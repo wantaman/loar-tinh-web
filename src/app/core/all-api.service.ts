@@ -85,7 +85,7 @@ export class AllApiService {
   }
 
   deleteData(url: any, id: any) {
-    return this.http.delete(this.finalBaseApi + url + id + '/')
+    return this.http.delete(this.finalBaseApi + url + id )
   }
 
 

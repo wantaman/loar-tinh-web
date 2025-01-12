@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { MainComponent } from './layouts/main/main.component';
 import { DetialProductComponent } from './detial-product/detial-product.component';
 import { ViewMoreComponent } from './view-more/view-more.component';
+import { CheckoutsComponent } from './checkouts/checkouts.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
         path: 'shop-more', 
         canActivate : [],
         component : ViewMoreComponent, 
+      },
+      {
+        path: 'checkouts', 
+        canActivate : [],
+        component : CheckoutsComponent, 
       },
     ]  
   }

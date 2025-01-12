@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MegaMenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { CartComponent } from 'src/app/cart/cart.component';
+import { CartService } from 'src/app/core/cart.service';
 
 @Component({
     selector: 'app-header',
@@ -22,10 +23,10 @@ export class HeaderComponent implements OnInit {
     visiblesignUp: boolean = false;
     isPasswordVisible: boolean = false;
     checkAfterLogin: boolean = false;
-    userData:any;
+    userData: any;
     Avatar: any;
-    accessToken:any;
-    
+    accessToken: any;
+    cartCount: number = 0;
 
     inputGroup = new FormGroup({
         name: new FormControl('', Validators.required),
@@ -41,13 +42,20 @@ export class HeaderComponent implements OnInit {
         private allApi: AllApiService,
         private cookieService: CookieService,
         private router: Router,
+        private cartService: CartService
     ) {
-   
+        this.cartService.cartCount$.subscribe((count) => {
+            this.cartCount = count;
+        });
     }
 
 
     ngOnInit(): void {
         this.loadDataUser();
+
+        localStorage.getItem('num_cart')
+        const cart = localStorage.getItem('num_cart')
+        console.log('data cart', cart)
     }
 
     get f() {
@@ -74,15 +82,15 @@ export class HeaderComponent implements OnInit {
             'email': this.f.email.value,
             'password': this.f.password.value
         }
-    
+
         // Encode email and password in Base64 
         // header with Basic Auth
         const credentials = btoa(`${environment.Username}:${environment.Password}`);
-        const headers = { 
-            Authorization: `Basic ${credentials}` 
+        const headers = {
+            Authorization: `Basic ${credentials}`
         };
-    
-        this.allApi.loginData(this.allApi.loginUrl,inputData, { headers }).subscribe(
+
+        this.allApi.loginData(this.allApi.loginUrl, inputData, { headers }).subscribe(
             (data: any) => {
                 this.userData = data;
                 this.Avatar = data.data.user
@@ -92,7 +100,7 @@ export class HeaderComponent implements OnInit {
                 // const tmpToken = this.allFunction.encryptFileForLocal(environment.localEncriptKey, this.userData.accessToken);
                 // // const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(this.userData));
 
-                
+
                 // this.cookieService.set('token', tmpToken, 0.25); 
                 localStorage.setItem('user', JSON.stringify(this.userData));
                 localStorage.setItem('token', JSON.stringify(this.accessToken));
@@ -103,7 +111,7 @@ export class HeaderComponent implements OnInit {
             }
         );
     }
-    
+
 
     signup() {
         this.checkAfterLogin = true;
@@ -116,19 +124,19 @@ export class HeaderComponent implements OnInit {
         }
 
         const credentials = btoa(`${environment.Username}:${environment.Password}`);
-        const headers = { 
-            Authorization: `Basic ${credentials}` 
+        const headers = {
+            Authorization: `Basic ${credentials}`
         };
-    
 
-        this.allApi.signupData(this.allApi.registerUrl, inputData, {headers}).subscribe(
+
+        this.allApi.signupData(this.allApi.registerUrl, inputData, { headers }).subscribe(
             (data: any) => {
 
                 this.checkAfterLogin = false;
                 console.log('data success login', data);
                 const user = data.data;
                 const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(user));
-                
+
                 localStorage.setItem('user', profile);
             },
             err => {
@@ -143,11 +151,11 @@ export class HeaderComponent implements OnInit {
 
         if (profileUser) {
             this.userData = JSON.parse(profileUser);
-    
+
             this.Avatar = this.userData?.data?.user?.avatar;
-        } 
+        }
     }
-    
+
 
     showDialoglogin() {
         this.visible = true;
@@ -198,7 +206,7 @@ export class HeaderComponent implements OnInit {
             result => {
                 if (result) {
                     if (result.is_refresh) {
-
+                        result.is_refresh = true
                     }
                 }
                 console.log('close', result)
@@ -207,18 +215,18 @@ export class HeaderComponent implements OnInit {
     }
 
 
-    logout(){
+    logout() {
         console.log("logout")
-        localStorage.removeItem('token'); 
+        localStorage.removeItem('token');
         localStorage.clear();
         this.checkAfterLogin = false
-        if(!localStorage.getItem('token')){
-          this.router.navigate(['']);
-          this.checkAfterLogin = true
-          this.userData = null
-        //   window.location.reload(); 
-          console.log("no token", this.userData) 
-        }  
+        if (!localStorage.getItem('token')) {
+            this.router.navigate(['']);
+            this.checkAfterLogin = true
+            this.userData = null
+            //   window.location.reload(); 
+            console.log("no token", this.userData)
+        }
 
     }
 

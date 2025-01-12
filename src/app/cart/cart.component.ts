@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AllApiService } from '../core/all-api.service';
 import { GeneralFunctionService } from '../core/function/general-function.service';
 import { SearchFormComponent } from '../search-form/search-form.component';
+import { CartService } from '../core/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,12 @@ export class CartComponent {
   isRefreshTable = false;
   resultData:any;
   totalPrice: any;
+  page = 1;
+
+  productId: string | null = null;
+  quantity: number = 1;
+  userId: any;
+  CountCart:any;
 
   constructor(
     private allFunction: GeneralFunctionService,
@@ -26,27 +33,30 @@ export class CartComponent {
     public dialogRef: MatDialogRef<CartComponent>,
     private allApi: AllApiService,
     private router: Router,
+    private route: ActivatedRoute,
+    private cartService: CartService
   )
   {
     this.getAllData()
+
+    this.route.queryParams.subscribe(params => {
+      this.productId = params['product_id'];
+    });
+
+    const userString = localStorage.getItem('user'); 
+    const user = userString ? JSON.parse(userString) : null; 
+    this.userId = user.data.user.id;
+    
+
   }
 
-  onSearch() {
-    this.clearSearch();
-    this.loadingGet = true;
-    this.searchTimeout = setTimeout(() => {
-      this.searchTimeout = null;
-      this.getAllData()
-    }, this.allFunction.searchDelay);
+
+  refresh() {
+    this.page = 1;
+    this.search_key = null
+    this.getAllData()
   }
 
-  clearSearch() {
-    if (this.searchTimeout) {
-      this.loadingGet = false;
-      clearTimeout(this.searchTimeout)
-      this.searchTimeout = null;
-    }
-  }
 
   getAllData(){
     this.loadingGet = true;
@@ -70,10 +80,10 @@ export class CartComponent {
 
   orderProduct(){
     const inputData = {
-      "userId": 1,
+      "userId": this.userId,
       "items": [
           {
-              "productId": 1,
+              "productId": this.productId,
               "quantity": 9
           }
       ],
@@ -86,6 +96,8 @@ export class CartComponent {
       }
     )
   }
+
+
   calculateTotalPrice() {
     let total = 0;
     this.resultData.forEach((item: any) => {
@@ -93,6 +105,29 @@ export class CartComponent {
     });
     this.totalPrice = total;
   }
+
+  removeFromCart(id: any) {
+    this.allApi.deleteData(this.allApi.cartUrl + '/', id).subscribe(
+      (data: any) => {
+        console.log('Item removed from cart:', data);
+        this.updateCartCountAfterRemoval();
+        this.refresh(); 
+      },
+      (err: any) => {
+        console.log('Error removing item from cart:', err);
+      }
+    );
+  }
+  
+  updateCartCountAfterRemoval() {
+    const currentCount = parseInt(localStorage.getItem('cartCount') || '0', 10);
+    const newCount = currentCount > 0 ? currentCount - 1 : 0;
+
+    localStorage.setItem('cartCount', newCount.toString());
+  
+    this.cartService.updateCartCount(newCount);
+  }
+  
 
   gotoPage(product: any) {
     console.log(product);
@@ -114,4 +149,5 @@ export class CartComponent {
       );
     }, this.allFunction.closeDelaySmall);
   }
+  
 }
