@@ -44,11 +44,27 @@
 }
 
 
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.info-value {
+    flex-grow: 1;
+}
+
+
 //style form
 .form-check-input[type="radio"] {
-    appearance: none; 
+    appearance: none;
     -webkit-appearance: none;
-    width: 20px; 
+    width: 20px;
     height: 20px;
     border: 2px solid #000000;
     border-radius: 4px;
@@ -60,7 +76,7 @@
 }
 
 .form-check-label {
-    margin-left: 8px; 
+    margin-left: 8px;
     cursor: pointer;
 }
 
@@ -86,5 +102,63 @@
 
     &:hover {
         background-color: #333;
+    }
+}
+
+
+
+
+.dialog-content {
+    text-align: center;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+button {
+    margin-top: 15px;
+}
+
+.balloons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.balloon {
+    position: absolute;
+    bottom: 0;
+    background-color: #ff66b2;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: floatUp 4s ease-in infinite;
+    opacity: 0.8;
+}
+
+.balloon:nth-child(odd) {
+    background-color: #ff3366;
+}
+
+.balloon:nth-child(even) {
+    background-color: #ff6699;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-200px);
+        opacity: 0;
     }
 }

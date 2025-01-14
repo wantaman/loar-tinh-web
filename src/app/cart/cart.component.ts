@@ -5,6 +5,7 @@ import { AllApiService } from '../core/all-api.service';
 import { GeneralFunctionService } from '../core/function/general-function.service';
 import { SearchFormComponent } from '../search-form/search-form.component';
 import { CartService } from '../core/cart.service';
+import { OrderService } from '../core/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,14 +18,14 @@ export class CartComponent {
   loadingGet = false;
   loadingRequest = false;
   isRefreshTable = false;
-  resultData:any;
+  resultData: any;
   totalPrice: any;
   page = 1;
-
-  productId: string | null = null;
+  dataObject: any[] = [];
+  productId: any;
   quantity: number = 1;
   userId: any;
-  CountCart:any;
+  CountCart: any;
 
   constructor(
     private allFunction: GeneralFunctionService,
@@ -34,19 +35,19 @@ export class CartComponent {
     private allApi: AllApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private cartService: CartService
-  )
-  {
+    private cartService: CartService,
+    private orderService: OrderService,
+  ) {
     this.getAllData()
 
-    this.route.queryParams.subscribe(params => {
-      this.productId = params['product_id'];
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   this.productId = params['product_id'];
+    // });
 
-    const userString = localStorage.getItem('user'); 
-    const user = userString ? JSON.parse(userString) : null; 
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
     this.userId = user.data.user.id;
-    
+
 
   }
 
@@ -58,44 +59,52 @@ export class CartComponent {
   }
 
 
-  getAllData(){
+  getAllData() {
     this.loadingGet = true;
     let filter = {
       keyword: this.search_key
     }
 
     this.allApi.getDataWithFilter(this.allApi.cartUrl, filter).subscribe(
-      (data: any) =>{
+      (data: any) => {
         this.loadingGet = false;
         this.resultData = data.data;
+        this.dataObject = data.data
         this.calculateTotalPrice();
         console.log('data cart', data)
       },
-      (err:any) =>{
+      (err: any) => {
         this.loadingGet = false;
         console.log('Error', err)
       }
     )
   }
 
-  orderProduct(){
+  orderProduct() {
+    const items = this.dataObject.map((data: any) => ({
+      productId: data.product.id,
+      quantity: data.quantity,
+    }));
+  
     const inputData = {
-      "userId": this.userId,
-      "items": [
-          {
-              "productId": this.productId,
-              "quantity": 9
-          }
-      ],
-    }
-
+      userId: this.userId,
+      items: items,
+    };
+  
+    console.log('data json', inputData);
+  
     this.allApi.createData(this.allApi.orderUrl, inputData).subscribe(
-      (data:any) =>{
-        console.log('data order success', data)
- 
+      (data: any) => {
+        console.log('data order success', data);
+        this.orderService.setOrderData(data);
+        this.router.navigate(['checkouts']);
+        this.closeForm();
+      },
+      (err: any) => {
+        console.log('Error creating order:', err);
       }
-    )
-  }
+    );
+  }  
 
 
   calculateTotalPrice() {
@@ -111,23 +120,23 @@ export class CartComponent {
       (data: any) => {
         console.log('Item removed from cart:', data);
         this.updateCartCountAfterRemoval();
-        this.refresh(); 
+        this.refresh();
       },
       (err: any) => {
         console.log('Error removing item from cart:', err);
       }
     );
   }
-  
+
   updateCartCountAfterRemoval() {
     const currentCount = parseInt(localStorage.getItem('cartCount') || '0', 10);
     const newCount = currentCount > 0 ? currentCount - 1 : 0;
 
     localStorage.setItem('cartCount', newCount.toString());
-  
+
     this.cartService.updateCartCount(newCount);
   }
-  
+
 
   gotoPage(product: any) {
     console.log(product);
@@ -137,17 +146,18 @@ export class CartComponent {
         queryParams: { product_id: product },
       },
     );
-    this.closeForm();
+    // this.closeForm();
   }
 
 
   closeForm() {
-    this.allFunction.closeDialog(this.dataDetail.form_name)
+    console.log('close form')
+    this.allFunction.closeDialog(this.dataDetail?.form_name || 'default_form_name');
     setTimeout(() => {
-      this.dialogRef.close(
-        { is_refresh: this.isRefreshTable }
-      );
+      this.dialogRef.close({ is_refresh: true });
     }, this.allFunction.closeDelaySmall);
   }
-  
+
+
+
 }

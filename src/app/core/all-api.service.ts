@@ -15,6 +15,7 @@ export class AllApiService {
   registerUrl = '/auth/register';
   cartUrl = '/carts';
   orderUrl = '/orders';
+  paymentUrl = '/orders/payment'
 
   constructor(
     private http: HttpClient,

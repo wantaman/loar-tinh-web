@@ -1,7 +1,9 @@
 <div class="search-container mt-4">
     <div class="search-header">
         <h4 class="search-text">Cart Item</h4>
-        <mat-icon (click)="closeForm()" class="close-icon">close</mat-icon>
+        <button mat-button class="custom-close-button me-3" (click)="closeForm()">
+            <i class="fa-solid fa-xmark" style="font-size: 23px;"></i>
+        </button>
     </div>
 </div>
 <hr>
@@ -29,7 +31,7 @@
 <app-loading [isLoading]="loadingGet"></app-loading>
 
 <div class="cart-summary">
-    <p class="total-price">Total Price: US {{ totalPrice | currency }}</p>
+    <p class="total-price" *ngIf="resultData.length > 0">Total Price: US {{ totalPrice | currency }}</p>
 
     <button *ngIf="resultData.length > 0" (click)="orderProduct()" class="order-button">
         Checkout

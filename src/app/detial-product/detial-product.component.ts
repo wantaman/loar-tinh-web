@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AllApiService } from '../core/all-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from '../core/function/toast.service';
 import { HttpHeaders } from '@angular/common/http';
 import { CartService } from '../core/cart.service';
@@ -44,6 +44,7 @@ export class DetialProductComponent implements OnInit {
   constructor(
     private allApi: AllApiService,
     private route: ActivatedRoute,
+    private router: Router,
     private ToastrService: NGXToastrService,
     private cartService: CartService
   ) {
@@ -115,6 +116,12 @@ export class DetialProductComponent implements OnInit {
         const newCartCount = data.data?.quantity || 1;
         this.cartService.updateCartCount(newCartCount);
         this.ToastrService.typeSuccessAddCart();
+        this.router.navigate(
+          ['detial-product'],
+          {
+            queryParams: { product_id: data.id },
+          },
+        );
       },
       (err) => {
         console.log('err add cart', err)
