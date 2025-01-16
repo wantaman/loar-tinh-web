@@ -12,4 +12,12 @@ export class NGXToastrService {
     typeSuccessAddCart() {
         this.toastr.success("Add To Cart Success");
     }
+
+    typeSuccessLogint() {
+        this.toastr.success("Login Successfully");
+    }
+
+    typeSuccessRegister() {
+        this.toastr.success("Register successfully");
+    }
 }

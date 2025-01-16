@@ -152,7 +152,7 @@ export class CartComponent {
 
   closeForm() {
     console.log('close form')
-    this.allFunction.closeDialog(this.dataDetail?.form_name || 'default_form_name');
+    this.allFunction.closeDialog(this.dataDetail?.form_name );
     setTimeout(() => {
       this.dialogRef.close({ is_refresh: true });
     }, this.allFunction.closeDelaySmall);

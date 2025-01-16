@@ -11,6 +11,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { CartComponent } from 'src/app/cart/cart.component';
 import { CartService } from 'src/app/core/cart.service';
+import { ProfileUserComponent } from 'src/app/profile-user/profile-user.component';
+import { NGXToastrService } from 'src/app/core/function/toast.service';
 
 @Component({
     selector: 'app-header',
@@ -20,7 +22,6 @@ import { CartService } from 'src/app/core/cart.service';
 export class HeaderComponent implements OnInit {
 
     visible: boolean = false;
-    visiblesignUp: boolean = false;
     isPasswordVisible: boolean = false;
     checkAfterLogin: boolean = false;
     userData: any;
@@ -42,7 +43,8 @@ export class HeaderComponent implements OnInit {
         private allApi: AllApiService,
         private cookieService: CookieService,
         private router: Router,
-        private cartService: CartService
+        private cartService: CartService,
+        private ToastrService: NGXToastrService,
     ) {
         this.cartService.cartCount$.subscribe((count) => {
             this.cartCount = count;
@@ -93,10 +95,12 @@ export class HeaderComponent implements OnInit {
         this.allApi.loginData(this.allApi.loginUrl, inputData, { headers }).subscribe(
             (data: any) => {
                 this.userData = data;
-                this.Avatar = data.data.user
+                this.Avatar = data.data.user.avatar
                 this.accessToken = data.data.accessToken;
                 console.log('Login successful:', this.userData);
                 this.checkAfterLogin = false;
+                this.visible = false;
+                this.ToastrService.typeSuccessLogint();
                 // const tmpToken = this.allFunction.encryptFileForLocal(environment.localEncriptKey, this.userData.accessToken);
                 // // const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(this.userData));
 
@@ -133,11 +137,15 @@ export class HeaderComponent implements OnInit {
             (data: any) => {
 
                 this.checkAfterLogin = false;
-                console.log('data success login', data);
-                const user = data.data;
-                const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(user));
+                console.log('data success register', data);
+                this.userData = data;
+                this.Avatar = data.data.avatar;
+                // const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(user));
+                this.ToastrService.typeSuccessRegister();
+                this.checkAfterLogin = false;
+                this.visible = false;
 
-                localStorage.setItem('user', profile);
+                localStorage.setItem('user', data);
             },
             err => {
                 this.checkAfterLogin = true;
@@ -214,6 +222,31 @@ export class HeaderComponent implements OnInit {
         )
     }
 
+    openFormProfile(type: 'add' | 'edit', data?: any) {
+        let tmp_DialogData: any = {
+            size: "medium",
+            type: type,
+            form_name: 'profile'
+        }
+        const dialogRef = this.dialog.open(ProfileUserComponent,
+            this.allFunction.dialogDataProfile(
+                tmp_DialogData.size,
+                tmp_DialogData.type,
+                tmp_DialogData.form_name,
+                data
+            )
+        )
+        dialogRef.afterClosed().subscribe(
+            result => {
+                if (result) {
+                    if (result.is_refresh) {
+                        result.is_refresh = true
+                    }
+                }
+                console.log('close', result)
+            }
+        )
+    }
 
     logout() {
         console.log("logout")

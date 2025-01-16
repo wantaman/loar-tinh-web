@@ -44,7 +44,7 @@
                         <div class="noti-list">
                             <div class="menu ">
                                 <div class="user_dw_menu">
-                                    <button mat-menu-item (click)="openForm('edit')">
+                                    <button mat-menu-item (click)="openFormProfile('edit')">
                                         <app-feather-icons [icon]="'user'"
                                             [class]="'user-menu-icons'"></app-feather-icons>Profile
                                     </button>
@@ -106,7 +106,7 @@
                         <button type="submit" class="btn btn-dark mt-3 w-100" (click)="login()">
                             LOGIN
                         </button>
-                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                        <div *ngIf="checkAfterLogin === true" class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
                             <span style="font-size: 12px;">Login Failed! Please Try Again</span>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>

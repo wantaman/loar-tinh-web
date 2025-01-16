@@ -51,6 +51,8 @@ import { CommonModule } from '@angular/common';
 import { CheckoutsComponent } from './checkouts/checkouts.component';
 import { CurrentLocationComponent } from './current-location/current-location.component';
 import { LocationService } from './core/location.service';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { LocationService } from './core/location.service';
     LoadingButtonComponent,
     CartComponent,
     CheckoutsComponent,
-    CurrentLocationComponent
+    CurrentLocationComponent,
+    ProfileUserComponent
   ],
   imports: [
     BrowserModule,
@@ -98,6 +101,7 @@ import { LocationService } from './core/location.service';
     CheckboxModule,
     TabViewModule,
     ProgressSpinnerModule,
+    MatRadioModule,
     ToastrModule.forRoot(),
   ],
   providers: [
