@@ -5,6 +5,7 @@ import { CartService } from '../core/cart.service';
 import { NGXToastrService } from '../core/function/toast.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../core/order.service';
+import { LocationService } from '../core/location.service';
 
 @Component({
   selector: 'app-checkouts',
@@ -13,7 +14,7 @@ import { OrderService } from '../core/order.service';
 })
 export class CheckoutsComponent {
   message: string = 'Congratulations! Your order has been successfully placed!';
-  productId: string | null = null;
+  orderId: any;
   quantity: number = 1;
   userId: any;
   CountCart: any;
@@ -22,14 +23,26 @@ export class CheckoutsComponent {
   orderData: any;
   visible: boolean = false;
   balloons: any[] = [1, 2, 3, 4, 5]; 
+  resultData:any[] = [];
+  location: { latitude: number; longitude: number; accuracy: number ,  locationName?: string;} | null = null;
+  errorMessage: string | null = null;
 
-  inputGroup = new FormGroup({
-    paymentMethod: new FormControl(''),
-    userId: new FormControl(''),
-    name: new FormControl(''),
-    longitude: new FormControl(''),
-    latitude: new FormControl('')
-  })
+  // inputGroup = new FormGroup({
+  //   paymentMethod: new FormControl(''),
+  //   userId: new FormControl(''),
+  //   name: new FormControl(''),
+  //   longitude: new FormControl(''),
+  //   latitude: new FormControl('')
+  // })
+
+  paymentOptions = [
+    { value: 'ABA', label: 'ABA', image: '../../assets/images/aba-pay-web.png' },
+    { value: 'Credit Card', label: 'Credit Card', image: '../../assets/images/credit-debit-card.png' },
+    { value: 'AC', label: 'Xpay', image: '../../assets/images/xpay.png' },
+    { value: 'Wing', label: 'Wing', image: '../../assets/images/Wing.png' },
+    { value: 'Cash On Delivery', label: 'Cash On Delivery', image: '../../assets/images/cod-kh-en.png' },
+  ];
+  
 
   responsiveOptions: any[] = [
     {
@@ -52,11 +65,12 @@ export class CheckoutsComponent {
     private ToastrService: NGXToastrService,
     private cartService: CartService,
     private orderService: OrderService,
-    private router: Router
+    private router: Router,
+    private locationService: LocationService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.productId = params['product_id'];
-      console.log(this.productId)
+      this.orderId = params['order_id'];
+      console.log(this.orderId)
     });
 
     const userString = localStorage.getItem('user');
@@ -71,7 +85,7 @@ export class CheckoutsComponent {
     this.orderData = this.orderService.getOrderData();
     console.log('Order Data:', this.orderData);
 
-
+    this.getAllData()
   }
 
   ngOnInit() {
@@ -82,34 +96,72 @@ export class CheckoutsComponent {
     } else {
       this.nameUser = null;
     }
+
+    this.fetchLocation()
     
   }
+
+  // get f() {
+  //   return this.inputGroup.controls
+  // }
+
+  getAllData() {
+    this.allApi.getDataWithFilter(this.allApi.cartUrl).subscribe(
+      (data: any) => {
+        this.resultData = data.data;
+        console.log('data cart', data)
+      },
+      (err: any) => {
+        console.log('Error', err)
+      }
+    )
+  }
+
 
 
   closeDialog() {
     this.visible = false;
     this.router.navigate(['/']);  
   }
+
+  fetchLocation(): void {
+    this.locationService
+      .getCurrentLocation()
+      .then((location) => {
+        this.location = location;
+        console.log('User location:', location);
+      })
+      .catch((error) => {
+        this.errorMessage = error;
+        console.error(error);
+      });
+  }
   
 
   Payment() {
     const inputData = {
-      paymentMethod: "Wing",
-      orderId: 2,
+      paymentMethod: 'wing',
+      orderId: Number(this.orderId.product.id),
       location: {
-          name: "Torl Svay prey",
-          longitude: 33.5554,
-          latitude: 2.255,
+          name: this.location?.locationName,
+          longitude: this.location?.longitude,
+          latitude: this.location?.latitude,
       }
     }
     console.log('json data order', inputData)
 
-    this.allApi.createData(this.allApi.paymentUrl, inputData).subscribe(
-      (data: any) => {
-        console.log('data order success', data)
-        this.visible = true;
-      }
-    )
+    // this.allApi.createData(this.allApi.paymentUrl, inputData).subscribe(
+    //   (data: any) => {
+    //     console.log('data order success', data)
+    //     this.visible = true;
+    //     this.deleteCart();
+    //   }
+    // )
+  }
+
+
+  deleteCart(){
+    this.allApi.deleteData(this.allApi.cartUrl, this.orderId.id).subscribe()
   }
 
 

@@ -16,12 +16,13 @@
             <div class="product-details">
                 <p class="product-name">{{ data.product.name }}</p>
                 <p class="product-price">US {{ data.product.unitPrice | currency }}</p>
+                <p class="product-price">Quantity {{ data.quantity }}</p>
             </div>
             <!-- Remove/Delete Icon -->
             <mat-icon class="delete-icon" (click)="removeFromCart(data.id)">
                 delete
             </mat-icon>
-        </div>
+        </div>1
     </div>
 </div>
 

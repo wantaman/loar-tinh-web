@@ -97,14 +97,25 @@ export class CartComponent {
       (data: any) => {
         console.log('data order success', data);
         this.orderService.setOrderData(data);
-        this.router.navigate(['checkouts']);
+        // this.router.navigate(['checkouts']);
         this.closeForm();
       },
       (err: any) => {
         console.log('Error creating order:', err);
       }
     );
-  }  
+  } 
+  
+  gotoPage(order: any) {
+    console.log(order);
+    this.router.navigate(
+      ['detail-product'],
+      {
+        queryParams: { order_id: order },
+      },
+    );
+  }
+
 
 
   calculateTotalPrice() {
@@ -137,17 +148,6 @@ export class CartComponent {
     this.cartService.updateCartCount(newCount);
   }
 
-
-  gotoPage(product: any) {
-    console.log(product);
-    this.router.navigate(
-      ['detail-product'],
-      {
-        queryParams: { product_id: product },
-      },
-    );
-    // this.closeForm();
-  }
 
 
   closeForm() {

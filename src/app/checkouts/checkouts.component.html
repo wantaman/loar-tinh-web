@@ -35,12 +35,13 @@
                         <h2 style="font-size: 20px; font-weight: 700;">My Shopping Bag</h2>
                         <div class="card p-3 mt-2" style="width: 100%; background-color: #f7f7f7;">
                             <div class="product-list">
-                                <div class="product-item">
-                                    <img src="../../assets/images/logo.png" alt="Aaron Gordon AG V: Denver"
+                                <div class="product-item" *ngFor="let data of resultData">
+                                    <img [src]="data.product.thumbnail" alt="Aaron Gordon AG V: Denver"
                                         class="product-image" />
                                     <div class="product-details">
-                                        <p class="product-name">name</p>
-                                        <p class="product-price">US 1233</p>
+                                        <p class="product-name">{{data.product.name}}</p>
+                                        <p class="product-price">US {{data.product.unitPrice}}</p>
+                                        <p class="product-price">Quantity: {{data.quantity}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -53,39 +54,21 @@
                     <div>
                         <h2 style="font-size: 20px; font-weight: 700;">Payment</h2>
                         <div class="card p-3 mt-2" style="border: none;">
-                            <div class="form-check form-check-inline m-2" style="display: flex; align-items: center;">
-                                <input class="form-check-input me-3" type="radio" name="gender" id="inlineRadio1"
-                                    value="ABA">
-                                <img height="40px" src="../../assets/images/aba-pay-web.png" alt="aba">
+                            <div
+                              class="form-check form-check-inline m-2"
+                              style="display: flex; align-items: center;"
+                              *ngFor="let payment of paymentOptions"
+                            >
+                              <input
+                                class="form-check-input me-3"
+                                type="radio"
+                                [value]="payment.value"
+                                id="payment-{{ payment.value }}"
+                              />
+                              <img [src]="payment.image" [alt]="payment.label" height="40px" />
                             </div>
-
-                            <div class="form-check form-check-inline m-2" style="display: flex; align-items: center;">
-                                <input class="form-check-input me-3" type="radio" name="gender" id="inlineRadio1"
-                                    value="Credit Card">
-                                <img height="40px" src="../../assets/images/credit-debit-card.png"
-                                    alt="credit-debit-card">
-                            </div>
-
-
-                            <div class="form-check form-check-inline m-2" style="display: flex; align-items: center;">
-                                <input class="form-check-input me-3" type="radio" name="gender" id="inlineRadio1"
-                                    value="AC">
-                                <img height="40px" src="../../assets/images/xpay.png" alt="xpay">
-                            </div>
-
-                            <div class="form-check form-check-inline m-2" style="display: flex; align-items: center;">
-                                <input class="form-check-input me-3" type="radio" name="gender" id="inlineRadio1"
-                                    value="Wing">
-                                <img height="40px" src="../../assets/images/Wing.png" alt="wing">
-                            </div>
-
-                            <div class="form-check form-check-inline m-2" style="display: flex; align-items: center;">
-                                <input class="form-check-input me-3" type="radio" name="gender" id="inlineRadio1"
-                                    value="Cash On Delivery">
-                                <img height="40px" src="../../assets/images/cod-kh-en.png" alt="cod-kh-en">
-                            </div>
-
-                        </div>
+                          </div>
+                          
                     </div>
 
                     <div>

@@ -59,9 +59,6 @@ export class DetialProductComponent implements OnInit {
     const userString = localStorage.getItem('user'); 
     const user = userString ? JSON.parse(userString) : null; 
     this.userId = user.data.user.id;
-
-    this.token = localStorage.getItem('token')?.replace(/"/g, '') || null;
-    console.log('Sanitized token:', this.token);
     
   }
 
