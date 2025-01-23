@@ -59,6 +59,16 @@ export class GeneralFunctionService {
       .classList.add("animate__slideOutRight");
   }
 
+  closeUserDialog(form_name: any) {
+    const elements = document.getElementsByClassName(form_name);
+    if (elements.length > 0) {
+      elements[0].classList.remove("animate__slideInLeft");
+      elements[0].classList.add("animate__slideOutRight");
+    } else {
+      console.warn(`Element with class ${form_name} not found.`);
+    }
+  }
+  
 
   dialogData(size: 'medium' | 'large' | 'extra large', type?: 'add' | 'edit' | 'reset' | 'view', form_name?: any, data?: any) {
     let width = '100%'
@@ -88,7 +98,7 @@ export class GeneralFunctionService {
     else if (size == 'extra large') { width = '1200px' }
     let tmp_data: any = {
       width: width,
-      height: "57%",
+      height: "70%",
       position: { center: '0' },
       disableClose: true,
       data: {

@@ -1,21 +1,24 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CartComponent } from '../cart/cart.component';
 import { AllApiService } from '../core/all-api.service';
 import { GeneralFunctionService } from '../core/function/general-function.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NGXToastrService } from '../core/function/toast.service';
 
 @Component({
   selector: 'app-profile-user',
   templateUrl: './profile-user.component.html',
-  styleUrls: ['./profile-user.component.scss']
+  styleUrls: ['./profile-user.component.scss'],
 })
 export class ProfileUserComponent {
-  editProfileForm: FormGroup;
-  dataUser :any[] = [];
+  dataUser: any;
   profile: string | ArrayBuffer | null = null;
   is_upload_photo = true;
+  selectedImage: File | null = null;
+  imageUrl: string | ArrayBuffer | null = null;
+
+  editProfileForm: FormGroup;
 
   constructor(
     private allFunction: GeneralFunctionService,
@@ -25,47 +28,101 @@ export class ProfileUserComponent {
     private allApi: AllApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ToastrService: NGXToastrService,
   ) {
-
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
-    this.dataUser = user.data;
+    this.dataUser = user?.data;
+    this.imageUrl = this.dataUser.user.avatar
 
+    // Initialize the form with controls
     this.editProfileForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      gender: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      roleId: ['', Validators.required]
+      name: [this.dataUser?.name || '', Validators.required],
+      email: [this.dataUser?.email || '', [Validators.required, Validators.email]],
+      gender: [this.dataUser?.gender || '', Validators.required],
+      roleId: [this.dataUser?.roleId || '', Validators.required],
     });
+
+    this.setDataIntoForm();
 
   }
 
 
-  onImageAdded(event: any): void {
-    const file = event[0]; // Get the first file from the dropzone
+
+  get f() {
+    return this.editProfileForm.controls;
+  }
+
+  setDataIntoForm(){
+    this.f['name'].setValue(this.dataUser.user.name);
+    this.f['email'].setValue(this.dataUser.user.email);
+    this.f['gender'].setValue(this.dataUser.user.gender);
+  }
+
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
+      this.selectedImage = file;
       const reader = new FileReader();
       reader.onload = () => {
-        this.profile = reader.result; // Update the preview
+        this.imageUrl = reader.result;
       };
-      reader.readAsDataURL(file); // Read the file as a Data URL
+      reader.readAsDataURL(file);
     }
   }
 
-  // Optional: Handle the change event
-  onImageChange(event: any): void {
-    console.log('Image changed:', event);
+  triggerFileInput(): void {
+    const fileInput = document.querySelector('.file-input') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
   }
 
+  dataJsonUser:any;
+  updateUser() {
+    const inputData = new FormData();
+    inputData.append('name', this.f['name'].value);
+    inputData.append('email', this.f['email'].value);
+    inputData.append('gender', this.f['gender'].value);
+    inputData.append('roleId', this.dataUser.user.id);  
 
-  closeForm() {
-    console.log('close form')
-    this.allFunction.closeDialog(this.dataDetail?.form_name );
+    if (this.selectedImage) {
+      inputData.append('avatar', this.selectedImage);
+    }
+
+    console.log('id', this.dataUser.user.id)
+
+    this.allApi.editData(this.allApi.userUrl +'/',inputData ,this.dataUser.user.id).subscribe(
+      (response: any) => {
+        console.log('User updated successfully:', response);
+        this.dataJsonUser = {
+          data:{
+            user:{
+              avatar: response.data.avatar,
+              email: response.data.email,
+              gender: response.data.gender,
+              id: response.data.id,
+              name: response.data.name
+            }
+          }
+        }
+        console.log('datajson', this.dataJsonUser)
+        localStorage.setItem('user', JSON.stringify(this.dataJsonUser))
+        this.ToastrService.typeSuccessAddCart();
+        this.closeForm();
+      },
+      (error) => {
+        console.error('Error updating user:', error);
+      }
+    );
+  }
+
+  closeForm(): void {
+    this.allFunction.closeUserDialog(this.dataDetail?.form_name);
     setTimeout(() => {
       this.dialogRef.close({ is_refresh: true });
     }, this.allFunction.closeDelaySmall);
   }
-
-
+  
 }

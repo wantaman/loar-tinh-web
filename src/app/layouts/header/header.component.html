@@ -3,10 +3,7 @@
 
         <div class="menu">
             <ul class="list-unstyled mb-0">
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Men</a></li>
-                <li><a href="#">Boys</a></li>
-                <li><a href="#">Girls</a></li>
+                <li style="cursor: pointer;" *ngFor="let data of cateList"><a (click)="gotoPage(data.name)">{{data.name}}</a></li>
             </ul>
         </div>
 

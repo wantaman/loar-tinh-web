@@ -58,7 +58,7 @@ export class DetialProductComponent implements OnInit {
 
     const userString = localStorage.getItem('user'); 
     const user = userString ? JSON.parse(userString) : null; 
-    this.userId = user.data.user.id;
+    this.userId = user?.data?.user?.id;
     
   }
 

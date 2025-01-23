@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
     Avatar: any;
     accessToken: any;
     cartCount: number = 0;
+    cateList:any;
 
     inputGroup = new FormGroup({
         name: new FormControl('', Validators.required),
@@ -49,6 +50,7 @@ export class HeaderComponent implements OnInit {
         this.cartService.cartCount$.subscribe((count) => {
             this.cartCount = count;
         });
+        this.getCategory();
     }
 
 
@@ -77,6 +79,25 @@ export class HeaderComponent implements OnInit {
         item.showSubmenu = false;
     }
 
+    getCategory(){
+        this.allApi.getAllData(this.allApi.categoryUrl).subscribe(
+            (data:any) => {
+                this.cateList = data.data;
+                console.log('data', this.cateList)
+            }
+        )
+    }
+
+    gotoPage(category: any) {
+        console.log(category);
+        this.router.navigate(
+          ['shop-more'],
+          {
+            queryParams: { category: category },
+          },
+        );
+      }
+
 
     login() {
         this.checkAfterLogin = true;
@@ -95,14 +116,14 @@ export class HeaderComponent implements OnInit {
         this.allApi.loginData(this.allApi.loginUrl, inputData, { headers }).subscribe(
             (data: any) => {
                 this.userData = data;
-                this.Avatar = data.data.user.avatar
+                this.Avatar = data.data.user.avatar;
                 this.accessToken = data.data.accessToken;
                 console.log('Login successful:', this.userData);
                 this.checkAfterLogin = false;
                 this.visible = false;
                 this.ToastrService.typeSuccessLogint();
                 // const tmpToken = this.allFunction.encryptFileForLocal(environment.localEncriptKey, this.userData.accessToken);
-                // // const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(this.userData));
+                // const profile = this.allFunction.encryptFileForLocal(environment.localEncriptKey, JSON.stringify(this.userData));
 
 
                 // this.cookieService.set('token', tmpToken, 0.25); 
@@ -132,7 +153,6 @@ export class HeaderComponent implements OnInit {
             Authorization: `Basic ${credentials}`
         };
 
-
         this.allApi.signupData(this.allApi.registerUrl, inputData, { headers }).subscribe(
             (data: any) => {
 
@@ -144,8 +164,8 @@ export class HeaderComponent implements OnInit {
                 this.ToastrService.typeSuccessRegister();
                 this.checkAfterLogin = false;
                 this.visible = false;
+                localStorage.setItem('user', JSON.stringify(this.userData));
 
-                localStorage.setItem('user', data);
             },
             err => {
                 this.checkAfterLogin = true;

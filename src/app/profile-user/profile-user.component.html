@@ -1,27 +1,39 @@
 <div class="edit-profile-container">
     <div class="edit-profile-header">
-        <h2>Edit Profile</h2>
-        <button mat-icon-button class="close-button" (click)="closeForm()">
+        <h4>Edit Profile</h4>
+        <button mat-icon-button class="close-button" (click)="closeForm()" aria-label="Close">
             <mat-icon>close</mat-icon>
         </button>
     </div>
 
     <form [formGroup]="editProfileForm">
         <div class="profile-picture-section">
-            <input type="file" accept="image/*" (change)="onImageChange($event)" class="file-input" />
-            <img class="profile-picture" width="120px" [src]="profile || '../../assets/images/User-avatar.svg.png'"
-                alt="Profile Picture" />
-            <p class="upload-instructions">Choose a new profile picture</p>
+            <div class="profile-picture-wrapper">
+                <img class="profile-picture" width="150px" height="150px" [src]="imageUrl || '../../assets/images/User-avatar.svg.png'"
+                    alt="Profile Picture" />
+                <button mat-icon-button class="edit-picture-button" (click)="triggerFileInput()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <input #fileInput type="file" accept="image/*" class="file-input" (change)="onImageSelected($event)"
+                    hidden />
+            </div>
+            <p class="upload-instructions">Click the icon to change your profile picture.</p>
         </div>
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Name</mat-label>
-            <input matInput formControlName="name" placeholder="Enter your full name" />
+            <input matInput formControlName="name" type="text" placeholder="Enter your full name" />
+            <!-- <mat-error *ngIf="editProfileForm.get('name').invalid && editProfileForm.get('name').touched">
+                Name is required.
+            </mat-error> -->
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" placeholder="Enter your email" />
+            <!-- <mat-error *ngIf="editProfileForm.get('email').invalid && editProfileForm.get('email').touched">
+                Please enter a valid email address.
+            </mat-error> -->
         </mat-form-field>
 
         <div class="gender-section">
@@ -33,7 +45,7 @@
         </div>
 
         <div class="action-buttons">
-            <button mat-raised-button color="primary" type="submit" [disabled]="editProfileForm.invalid">
+            <button mat-raised-button (click)="updateUser()" color="primary" type="submit">
                 Save Changes
             </button>
             <button mat-button color="warn" type="button" (click)="closeForm()">

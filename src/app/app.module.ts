@@ -29,7 +29,7 @@ import { MatExpansionModule} from '@angular/material/expansion';
 import { AllApiService } from './core/all-api.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './core/auth/auth.service';
 import { DialogModule } from 'primeng/dialog';
@@ -49,7 +49,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { CheckoutsComponent } from './checkouts/checkouts.component';
-import { CurrentLocationComponent } from './current-location/current-location.component';
 import { LocationService } from './core/location.service';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
 import {MatRadioModule} from '@angular/material/radio';
@@ -69,12 +68,12 @@ import {MatRadioModule} from '@angular/material/radio';
     LoadingButtonComponent,
     CartComponent,
     CheckoutsComponent,
-    CurrentLocationComponent,
     ProfileUserComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,

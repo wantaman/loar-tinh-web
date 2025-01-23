@@ -16,6 +16,7 @@ export class AllApiService {
   cartUrl = '/carts';
   orderUrl = '/orders';
   paymentUrl = '/orders/payment'
+  userUrl = '/users'
 
   constructor(
     private http: HttpClient,
@@ -82,7 +83,7 @@ export class AllApiService {
   }
   
   editData(url: any, data: any, id: any) {
-    return this.http.patch(this.finalBaseApi + url + id + '/', data);
+    return this.http.put(this.finalBaseApi + url + id , data);
   }
 
   deleteData(url: any, id: any) {
