@@ -1,0 +1,67 @@
+/* SCSS for the View More Link */
+.view-more-link {
+  font-weight: 500;
+  color: black; /* Blue color */
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 14px;
+}
+.view-more-link:hover {
+  color: black; /* Darker blue on hover */
+  text-decoration: underline;
+}
+
+/* SCSS for Big Title */
+.big-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* SCSS for Card and Game Container */
+.product-container {
+  margin-bottom: 15px;
+}
+.product-container .card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+.product-container .card:hover {
+  transform: scale(1.05);
+}
+.product-container .card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+/* Fade in animation */
+.animate-fadein {
+  animation: fadein 2.5s ease-out forwards;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* Fade out animation */
+.animate-fadeout {
+  animation: fadeout 2s ease-in forwards;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

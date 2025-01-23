@@ -1,0 +1,98 @@
+/* Footer Section */
+.nav-section {
+  background-color: rgba(238, 238, 238, 0.563);
+  color: grey;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  /* Logo and copyright section */
+  /* Contact Us section */
+  /* Follow Us Section */
+  /* Language and Payment Methods Section */
+  /* Responsive Design */
+}
+.nav-section .footer-overlay {
+  position: relative;
+  z-index: 1;
+}
+.nav-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.nav-section .footer-left-sec,
+.nav-section .footer-right-sec {
+  padding: 20px;
+}
+.nav-section .footer-left-sec .logo {
+  display: block;
+  margin-bottom: 10px;
+  height: 40px;
+}
+.nav-section .footer-left-sec .copy-right {
+  font-size: 14px;
+  color: rgb(53, 52, 52);
+}
+.nav-section h5 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: rgb(53, 52, 52);
+}
+.nav-section .footer-text {
+  font-size: 14px;
+  color: rgb(53, 52, 52);
+  margin: 5px 0;
+}
+.nav-section .footer-text i {
+  margin-right: 10px;
+}
+.nav-section .icon-list {
+  list-style: none;
+  padding-left: 0;
+}
+.nav-section .icon-list li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.nav-section .icon-list li a img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s;
+}
+.nav-section .icon-list li a:hover img {
+  transform: scale(1.1);
+}
+.nav-section .lan-btn {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+}
+.nav-section .lan-btn option {
+  padding: 5px;
+}
+.nav-section .we-accept {
+  margin-top: 15px;
+}
+.nav-section .we-accept img {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 10px;
+}
+@media (max-width: 768px) {
+  .nav-section .footer-left-sec,
+  .nav-section .footer-right-sec {
+    text-align: center;
+  }
+  .nav-section .footer-left-sec {
+    margin-bottom: 20px;
+  }
+  .nav-section .footer-right-sec .row {
+    display: block;
+  }
+  .nav-section .icon-list li {
+    display: block;
+    margin-bottom: 10px;
+  }
+}

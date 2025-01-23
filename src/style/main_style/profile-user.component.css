@@ -1,0 +1,82 @@
+.edit-profile-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.edit-profile-container .edit-profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit-profile-container .edit-profile-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+.edit-profile-container .edit-profile-header .close-button mat-icon {
+  font-size: 24px;
+  color: #555;
+}
+.edit-profile-container .edit-profile-header .close-button mat-icon:hover {
+  color: #000;
+}
+.edit-profile-container .profile-picture-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-profile-container .profile-picture-section .profile-dropzone {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px dashed #ccc;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.edit-profile-container .profile-picture-section .profile-dropzone:hover {
+  border-color: #007bff;
+}
+.edit-profile-container .profile-picture-section .profile-dropzone .profile-picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.edit-profile-container .profile-picture-section .upload-instructions {
+  font-size: 14px;
+  color: #666;
+}
+.edit-profile-container .form-field {
+  width: 100%;
+}
+.edit-profile-container .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.file-input {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+}
+
+.upload-instructions {
+  font-size: 14px;
+  color: #666;
+}
