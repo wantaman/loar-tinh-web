@@ -54,21 +54,14 @@
                     <div>
                         <h2 style="font-size: 20px; font-weight: 700;">Payment</h2>
                         <div class="card p-3 mt-2" style="border: none;">
-                            <div
-                              class="form-check form-check-inline m-2"
-                              style="display: flex; align-items: center;"
-                              *ngFor="let payment of paymentOptions"
-                            >
-                              <input
-                                class="form-check-input me-3"
-                                type="radio"
-                                [value]="payment.value"
-                                id="payment-{{ payment.value }}"
-                              />
-                              <img [src]="payment.image" [alt]="payment.label" height="40px" />
+                            <div class="form-check form-check-inline m-2" style="display: flex; align-items: center;"
+                                *ngFor="let payment of paymentOptions">
+                                <input class="form-check-input me-3" [formControl]="bank" type="radio" [value]="payment.value"
+                                    id="payment-{{ payment.value }}" />
+                                <img [src]="payment.image" [alt]="payment.label" height="40px" />
                             </div>
-                          </div>
-                          
+                        </div>
+
                     </div>
 
                     <div>

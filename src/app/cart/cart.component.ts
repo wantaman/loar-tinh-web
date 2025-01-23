@@ -97,7 +97,11 @@ export class CartComponent {
       (data: any) => {
         console.log('data order success', data);
         this.orderService.setOrderData(data);
-        // this.router.navigate(['checkouts']);
+        this.router.navigate(['checkouts'],
+          {
+            queryParams: { order_id: data.data.id },
+          },
+        );
         this.closeForm();
       },
       (err: any) => {

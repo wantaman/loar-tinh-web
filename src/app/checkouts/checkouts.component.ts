@@ -22,9 +22,17 @@ export class CheckoutsComponent {
   nameUser: any;
   orderData: any;
   visible: boolean = false;
-  balloons: any[] = [1, 2, 3, 4, 5]; 
-  resultData:any[] = [];
-  location: { latitude: number; longitude: number; accuracy: number ,  locationName?: string;} | null = null;
+  balloons: any[] = [1, 2, 3, 4, 5];
+  resultData: any[] = [];
+  location: {
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+    locationName?: string;
+  } | null = null;
+
+  bank = new FormControl();
+
   errorMessage: string | null = null;
 
   // inputGroup = new FormGroup({
@@ -42,7 +50,7 @@ export class CheckoutsComponent {
     { value: 'Wing', label: 'Wing', image: '../../assets/images/Wing.png' },
     { value: 'Cash On Delivery', label: 'Cash On Delivery', image: '../../assets/images/cod-kh-en.png' },
   ];
-  
+
 
   responsiveOptions: any[] = [
     {
@@ -98,8 +106,17 @@ export class CheckoutsComponent {
     }
 
     this.fetchLocation()
-    
+
   }
+
+
+  // looadData(){
+  //   const user = localStorage.getItem('user')
+  //   if(user){
+  //     const dataUser = JSON.parse(user);
+
+  //   }
+  // }
 
   // get f() {
   //   return this.inputGroup.controls
@@ -121,7 +138,7 @@ export class CheckoutsComponent {
 
   closeDialog() {
     this.visible = false;
-    this.router.navigate(['/']);  
+    this.router.navigate(['/']);
   }
 
   fetchLocation(): void {
@@ -136,32 +153,36 @@ export class CheckoutsComponent {
         console.error(error);
       });
   }
-  
+
 
   Payment() {
     const inputData = {
-      paymentMethod: 'wing',
-      orderId: Number(this.orderId.product.id),
+      paymentMethod: this.bank.value,
+      orderId: Number(this.orderId),
       location: {
-          name: this.location?.locationName,
-          longitude: this.location?.longitude,
-          latitude: this.location?.latitude,
+        name: this.location?.locationName,
+        longitude: this.location?.longitude,
+        latitude: this.location?.latitude,
       }
     }
     console.log('json data order', inputData)
 
-    // this.allApi.createData(this.allApi.paymentUrl, inputData).subscribe(
-    //   (data: any) => {
-    //     console.log('data order success', data)
-    //     this.visible = true;
-    //     this.deleteCart();
-    //   }
-    // )
+    this.allApi.createData(this.allApi.paymentUrl, inputData).subscribe(
+      (data: any) => {
+        console.log('data order success', data)
+        this.visible = true;
+        this.deleteCart(this.userId);
+      }
+    )
   }
 
 
-  deleteCart(){
-    this.allApi.deleteData(this.allApi.cartUrl, this.orderId.id).subscribe()
+  deleteCart(id:any) {
+    this.allApi.deleteData(this.allApi.cartUrl+'/', id).subscribe(
+      (data:any) =>{
+        console.log('data delete all cart', data)
+      }
+    )
   }
 
 
